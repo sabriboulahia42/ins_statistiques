@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "source": "Institut National des Statistiques - Tunisie",
+    "url": "http://dataportal.ins.tn",
+    "last_updated": "2024"
+  },
+  "exports": {
+    "label_fr": "Exportations FOB (MTND)",
+    "label_ar": "الصادرات (مليون دينار)",
+    "label_en": "Exports FOB (MTND)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [23690, 22617, 27434, 28310, 30090, 30622, 30695, 34050, 39120, 40960, 34600, 43100, 60200, 65800]
+  },
+  "imports": {
+    "label_fr": "Importations CAF (MTND)",
+    "label_ar": "الواردات (مليون دينار)",
+    "label_en": "Imports CIF (MTND)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [34070, 31768, 39870, 41960, 44620, 42150, 42100, 48150, 57200, 57040, 47000, 59400, 85200, 90500]
+  },
+  "balance": {
+    "label_fr": "Balance commerciale (MTND)",
+    "label_ar": "الميزان التجاري (مليون دينار)",
+    "label_en": "Trade Balance (MTND)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [-10380, -9151, -12436, -13650, -14530, -11528, -11405, -14100, -18080, -16080, -12400, -16300, -25000, -24700]
+  },
+  "partners_export": {
+    "label_fr": "Principaux clients (%) - 2023",
+    "label_ar": "أهم الشركاء المُصدِّر إليهم (%) - 2023",
+    "label_en": "Top Export Partners (%) - 2023",
+    "labels_fr": ["France", "Italie", "Allemagne", "Espagne", "Libye", "Autres"],
+    "labels_ar": ["فرنسا", "إيطاليا", "ألمانيا", "إسبانيا", "ليبيا", "أخرى"],
+    "labels_en": ["France", "Italy", "Germany", "Spain", "Libya", "Others"],
+    "values": [29, 17, 11, 7, 6, 30]
+  },
+  "coverage_rate": {
+    "label_fr": "Taux de couverture (%)",
+    "label_ar": "نسبة التغطية (%)",
+    "label_en": "Trade Coverage Rate (%)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [69.5, 71.2, 68.8, 67.5, 67.4, 72.6, 72.9, 70.7, 68.4, 71.8, 73.6, 72.5, 70.7, 72.7]
+  },
+  "kpis": [
+    { "label_fr": "Exportations 2023", "label_ar": "الصادرات 2023", "label_en": "Exports 2023", "value": "65.8 Mrd TND", "icon": "📦" },
+    { "label_fr": "Importations 2023", "label_ar": "الواردات 2023", "label_en": "Imports 2023", "value": "90.5 Mrd TND", "icon": "🚢" },
+    { "label_fr": "Taux de couverture 2023", "label_ar": "نسبة التغطية 2023", "label_en": "Coverage Rate 2023", "value": "72.7%", "icon": "⚖️" },
+    { "label_fr": "1er partenaire commercial", "label_ar": "الشريك التجاري الأول", "label_en": "Top Trade Partner", "value": "🇫🇷 France", "icon": "🌍" }
+  ]
+}

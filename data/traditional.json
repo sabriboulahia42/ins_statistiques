@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "source": "Institut National des Statistiques - Tunisie / Office National de l'Artisanat",
+    "url": "http://dataportal.ins.tn",
+    "last_updated": "2024"
+  },
+  "exports": {
+    "label_fr": "Exportations artisanales (MTND)",
+    "label_ar": "صادرات الصناعة التقليدية (مليون دينار)",
+    "label_en": "Craft Exports (MTND)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [98, 82, 95, 110, 125, 115, 120, 145, 162, 175, 118, 140, 185, 210]
+  },
+  "artisans": {
+    "label_fr": "Artisans enregistrés (milliers)",
+    "label_ar": "الحرفيون المسجلون (ألف)",
+    "label_en": "Registered Artisans (thousands)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [220, 215, 218, 225, 235, 240, 248, 255, 262, 270, 258, 265, 275, 285]
+  },
+  "crafts_categories": {
+    "label_fr": "Répartition par type d'artisanat (2023, %)",
+    "label_ar": "التوزيع حسب نوع الصناعة التقليدية (2023، %)",
+    "label_en": "Craft Type Breakdown (2023, %)",
+    "labels_fr": ["Tissage & Tapis", "Poterie & Céramique", "Cuir & Chaussures", "Bijouterie", "Bois & Sculpture", "Autres"],
+    "labels_ar": ["النسيج والسجاد", "الفخار والخزف", "الجلد والأحذية", "المجوهرات", "الخشب والنحت", "أخرى"],
+    "labels_en": ["Weaving & Carpets", "Pottery & Ceramics", "Leather & Shoes", "Jewellery", "Wood & Sculpture", "Other"],
+    "values": [28, 18, 16, 14, 12, 12]
+  },
+  "kpis": [
+    { "label_fr": "Artisans enregistrés", "label_ar": "الحرفيون المسجلون", "label_en": "Registered Artisans", "value": "285K", "icon": "🧶" },
+    { "label_fr": "Exportations 2023", "label_ar": "الصادرات 2023", "label_en": "Exports 2023", "value": "210 MTND", "icon": "🎨" },
+    { "label_fr": "Coopératives artisanales", "label_ar": "التعاونيات الحرفية", "label_en": "Craft Cooperatives", "value": "182", "icon": "🤝" },
+    { "label_fr": "Régions productrices", "label_ar": "المناطق المنتجة", "label_en": "Producing Regions", "value": "24", "icon": "📌" }
+  ]
+}

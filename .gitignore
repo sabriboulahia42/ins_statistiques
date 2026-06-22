@@ -1,0 +1,54 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.map
+.next/
+out/
+
+# User database
+data/users.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Export files (optional - remove if you want to track them)
+*.pdf
+*.xlsx
+*.docx
+*.pptx
+
+# Cache
+.cache/

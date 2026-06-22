@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "source": "Institut National des Statistiques - Tunisie",
+    "url": "http://dataportal.ins.tn",
+    "last_updated": "2024"
+  },
+  "arrivals": {
+    "label_fr": "Arrivées touristiques (millions)",
+    "label_ar": "الوافدون السياحيون (مليون)",
+    "label_en": "Tourist Arrivals (millions)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [6.9, 4.8, 5.9, 6.3, 7.2, 5.4, 5.7, 7.0, 8.3, 9.5, 2.1, 3.0, 6.7, 8.8]
+  },
+  "overnight_stays": {
+    "label_fr": "Nuitées dans les hôtels (millions)",
+    "label_ar": "الليالي الفندقية (مليون)",
+    "label_en": "Hotel Overnight Stays (millions)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [35.2, 20.1, 28.4, 32.0, 33.8, 26.0, 22.5, 28.0, 33.5, 36.0, 7.5, 12.0, 28.0, 36.5]
+  },
+  "receipts": {
+    "label_fr": "Recettes touristiques (MTND)",
+    "label_ar": "عائدات السياحة (مليون دينار)",
+    "label_en": "Tourism Revenue (MTND)",
+    "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "values": [3065, 2071, 2744, 2930, 3440, 2523, 2520, 2872, 3512, 4000, 900, 1650, 4200, 5100]
+  },
+  "kpis": [
+    { "label_fr": "Touristes en 2023", "label_ar": "السياح عام 2023", "label_en": "Tourists in 2023", "value": "8.8M", "icon": "✈️" },
+    { "label_fr": "Recettes 2023", "label_ar": "العائدات 2023", "label_en": "Revenue 2023", "value": "5.1 Mrd TND", "icon": "💰" },
+    { "label_fr": "Hôtels classés", "label_ar": "الفنادق المصنفة", "label_en": "Classified Hotels", "value": "820", "icon": "🏨" },
+    { "label_fr": "Emplois dans le tourisme", "label_ar": "مناصب الشغل في السياحة", "label_en": "Tourism Jobs", "value": "400K", "icon": "👷" }
+  ]
+}

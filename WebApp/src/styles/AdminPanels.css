@@ -1,0 +1,542 @@
+/**
+ * AdminPanels.css
+ * ──────────────────────────────────────────────────────────────
+ * Styles for admin panels (users, settings, data, analytics)
+ */
+
+.admin-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f4f8;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #2d3748;
+}
+
+.panel-stats {
+  font-size: 13px;
+  color: #718096;
+  background: #f7fafc;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.panel-loading {
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+}
+
+.error-alert {
+  background: #fff5f5;
+  border-left: 4px solid #f56565;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.success-alert {
+  background: #f0fff4;
+  border-left: 4px solid #48bb78;
+  color: #22543d;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* ── USERS PANEL ──────────────────────────────────────────────── */
+.users-table-container {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.users-table thead {
+  background: #f7fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.users-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.users-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.users-table tbody tr.selected {
+  background: #edf2f7;
+}
+
+.users-table td {
+  padding: 12px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-admin {
+  background: #bee3f8;
+  color: #1e3a8a;
+}
+
+.role-editor {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.role-viewer {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-badge.inactive {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.text-muted {
+  color: #718096;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── SETTINGS PANEL ──────────────────────────────────────────── */
+.settings-form {
+  max-width: 600px;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+}
+
+.settings-section h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-group.checkbox label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.form-group.checkbox input {
+  width: auto;
+  margin: 0;
+}
+
+.form-actions {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ── ANALYTICS PANEL ──────────────────────────────────────────– */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.analytics-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.analytics-card h3 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.analytics-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.chart-placeholder {
+  background: #f7fafc;
+  border-radius: 6px;
+  padding: 20px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+  height: 150px;
+  gap: 8px;
+}
+
+.bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.bar {
+  width: 100%;
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: all 0.2s;
+}
+
+.bar:hover {
+  opacity: 0.8;
+}
+
+.bar-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.bar-value {
+  font-size: 11px;
+  color: #718096;
+}
+
+.export-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.export-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.export-list li:last-child {
+  border-bottom: none;
+}
+
+.format-label {
+  width: 60px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.format-count {
+  width: 40px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.analytics-table thead {
+  background: #f7fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.analytics-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.analytics-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.analytics-table td {
+  padding: 12px;
+}
+
+.engagement-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.engagement-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+/* ── DATA MANAGEMENT PANEL ───────────────────────────────────── */
+.data-upload-section,
+.datasets-section,
+.backup-section {
+  margin-bottom: 30px;
+}
+
+.data-upload-section h3,
+.datasets-section h3,
+.backup-section h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.upload-area {
+  background: #f7fafc;
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.upload-input-wrapper {
+  position: relative;
+}
+
+#file-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  gap: 8px;
+}
+
+.upload-label:hover {
+  color: #667eea;
+}
+
+.upload-icon {
+  font-size: 32px;
+}
+
+.upload-label p {
+  margin: 0;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.upload-label small {
+  color: #718096;
+  font-size: 12px;
+}
+
+.selected-files {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.selected-files h4 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #2d3748;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.selected-files ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.selected-files li {
+  padding: 6px 0;
+  font-size: 13px;
+  color: #718096;
+}
+
+.datasets-table-container {
+  overflow-x: auto;
+}
+
+.datasets-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.datasets-table thead {
+  background: #f7fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.datasets-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.datasets-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.datasets-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.datasets-table td {
+  padding: 12px;
+}
+
+.dataset-icon {
+  margin-right: 6px;
+}
+
+.backup-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.backup-actions .btn {
+  margin: 0;
+}
