@@ -85,6 +85,8 @@ const i18n = {
     trade_info: 'يُعاني الميزان التجاري التونسي من عجز مزمن بسبب ارتفاع فاتورة الطاقة والمواد الأولية. تُهيمن فرنسا وإيطاليا وألمانيا على التبادل التجاري لتونس، وهو ما يعكس قرب تونس الجغرافي من أوروبا.',
     source: 'المصدر:', request_xml: 'استعلام XML: ',
     footer: 'المعطيات مصدرها <a href="http://dataportal.ins.tn" target="_blank">المعهد الوطني للإحصاء — INS تونس</a> · أُعدّ لتلاميذ السنة التاسعة أساسي · 2024–2025',
+    footer_terms: 'شروط الاستخدام',
+    footer_privacy: 'سياسة الخصوصية',
     logo: 'إحصائيات تونس',
     ct_cereals: 'الحبوب', ct_olive: 'زيت الزيتون', ct_dates: 'التمور', ct_fish: 'الصيد البحري',
     ch_cereals: 'إنتاج الحبوب (1000 طن)', ch_olive: 'إنتاج زيت الزيتون (1000 طن)',
@@ -154,6 +156,8 @@ const i18n = {
     trade_info: 'La balance commerciale tunisienne souffre d\'un déficit chronique dû à la facture énergétique et aux matières premières. La France, l\'Italie et l\'Allemagne dominent les échanges commerciaux de la Tunisie, reflétant la proximité géographique avec l\'Europe.',
     source: 'Source :', request_xml: 'Requête XML : ',
     footer: 'Données issues de <a href="http://dataportal.ins.tn" target="_blank">l\'INS — Institut National des Statistiques Tunisie</a> · Conçu pour les élèves de 9ème année · 2024–2025',
+    footer_terms: 'Conditions d\'utilisation',
+    footer_privacy: 'Politique de confidentialité',
     logo: 'Statistiques Tunisie',
     ct_cereals: 'Céréales', ct_olive: 'Huile d\'olive', ct_dates: 'Dattes', ct_fish: 'Pêche',
     ch_cereals: 'Production de céréales (1 000 t)', ch_olive: 'Production d\'huile d\'olive (1 000 t)',
@@ -223,6 +227,8 @@ const i18n = {
     trade_info: 'Tunisia\'s trade balance suffers from a chronic deficit driven by energy costs and raw materials. France, Italy and Germany dominate trade flows, reflecting Tunisia\'s geographic proximity to Europe.',
     source: 'Source:', request_xml: 'XML Query: ',
     footer: 'Data from <a href="http://dataportal.ins.tn" target="_blank">INS — National Institute of Statistics Tunisia</a> · Designed for 9th grade students · 2024–2025',
+    footer_terms: 'Terms of Use',
+    footer_privacy: 'Privacy Policy',
     logo: 'Tunisia Statistics',
     ct_cereals: 'Cereals', ct_olive: 'Olive Oil', ct_dates: 'Dates', ct_fish: 'Fishing',
     ch_cereals: 'Cereal Production (1,000 t)', ch_olive: 'Olive Oil Production (1,000 t)',
@@ -612,6 +618,11 @@ function applyTranslations() {
   // Button shows the NEXT language in the cycle: AR → FR → EN → AR
   const nextLangLabel = lang === 'ar' ? 'FR' : lang === 'fr' ? 'EN' : 'AR';
   document.getElementById('lang-btn').textContent = nextLangLabel;
+  // Update footer legal links text
+  const termsEl = document.getElementById('footer-terms');
+  const privacyEl = document.getElementById('footer-privacy');
+  if (termsEl && T.footer_terms) termsEl.textContent = T.footer_terms;
+  if (privacyEl && T.footer_privacy) privacyEl.textContent = T.footer_privacy;
 }
 
 /* ─── 10. Agriculture chart sub-tabs ─────────────────────── */
