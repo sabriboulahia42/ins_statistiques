@@ -11,6 +11,16 @@ export default function LoginPage() {
   const [localError, setLocalError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Determine the backend URL based on where the user is visiting
+  const getBackendUrl = () => {
+    const hostname = window.location.hostname;
+    if (hostname === 'ins-statistiques.onrender.com') {
+      return 'https://ins-statistiques.onrender.com';
+    }
+    // Default to local for development
+    return 'http://localhost:3080';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLocalError('');
@@ -33,7 +43,9 @@ export default function LoginPage() {
   };
 
   const handleOAuthLogin = (provider) => {
-    window.location.href = `/auth/${provider}`;
+    const baseUrl = getBackendUrl();
+    // Redirect to the correct backend OAuth route
+    window.location.href = `${baseUrl}/auth/${provider}`;
   };
 
   return (
