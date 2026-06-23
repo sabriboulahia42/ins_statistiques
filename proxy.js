@@ -220,42 +220,76 @@ app.get("/api/geo", async (req, res) => {
   }
 });
 
-// ── 6. AI Assistant Bridge (Gemini) ──────────────────────────
-// Requires GEMINI_API_KEY environment variable
+// ── 6. AI Assistant Bridge (Qwen via Hugging Face Free Tier) ──────────────────────────
+// Requires HF_API_KEY environment variable
 app.post("/api/ai", express.json(), async (req, res) => {
   const { prompt, history, context } = req.body;
-  const apiKey = process.env.GEMINI_API_KEY;
-
+  const apiKey = process.env.HF_API_KEY;
+  const model = "Qwen/Qwen2.5-72B-Instruct";
+  
   if (!apiKey) {
     return res.status(503).json({ error: "AI Service Unavailable (API Key missing)" });
   }
 
   try {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+    // Build conversation history for Qwen
+    let messages = [];
     
-    // Construct simplified parts for Gemini
-    const systemPrompt = `You are the INS Statistics Assistant for Tunisia. 
-      Help the user analyze statistics about agriculture, tourism, industry, etc.
-      Current section context: ${JSON.stringify(context)}.
-      Be concise, use markdown. If appropriate, suggest a chart by starting a line with [CHART] followed by JSON {type, labels, data, label}.`;
+    // Add system context
+    messages.push({
+      role: "system",
+      content: `You are the INS Statistics Assistant for Tunisia. 
+Help the user analyze statistics about agriculture, tourism, industry, etc.
+Current section context: ${JSON.stringify(context)}.
+Be concise, use markdown. If appropriate, suggest a chart by starting a line with [CHART] followed by JSON {type, labels, data, label}.`
+    });
+    
+    // Add conversation history
+    if (history && Array.isArray(history)) {
+      history.forEach(h => {
+        messages.push({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content });
+      });
+    }
+    
+    // Add current prompt
+    messages.push({ role: "user", content: prompt });
 
-    const response = await fetch(endpoint, {
+    const response = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json' 
+      },
       body: JSON.stringify({
-        contents: [
-          { role: 'user', parts: [{ text: systemPrompt }] },
-          ...history.map(h => ({ role: h.role, parts: [{ text: h.content }] })),
-          { role: 'user', parts: [{ text: prompt }] }
-        ]
+        inputs: messages.map(m => `${m.role}: ${m.content}`).join('\n'),
+        parameters: {
+          max_new_tokens: 300,
+          temperature: 0.7,
+          top_p: 0.95,
+          return_full_text: false
+        }
       })
     });
 
-    const data = await response.json();
-    const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Hugging Face API Error:", errorData);
+      
+      // Handle model loading state (common with free tier)
+      if (errorData.error && errorData.error.includes("loading")) {
+        return res.json({ text: "⏳ The AI model is currently warming up. Please try again in 30 seconds." });
+      }
+      throw new Error(errorData.error || "Failed to fetch AI response");
+    }
+
+    const result = await response.json();
+    const botText = Array.isArray(result) && result[0]?.generated_text 
+      ? result[0].generated_text.trim() 
+      : "I'm sorry, I couldn't process that.";
     
     res.json({ text: botText });
   } catch (err) {
+    console.error("AI Error:", err.message);
     res.status(500).json({ error: "AI unreachable" });
   }
 });
