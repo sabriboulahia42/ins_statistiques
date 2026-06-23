@@ -45,10 +45,10 @@ coverage/
 .nyc_output/
 
 # Export files (optional - remove if you want to track them)
-*.pdf
-*.xlsx
-*.docx
-*.pptx
-
+# *.pdf
+# *.xlsx
+# *.docx
+# *.pptx
+*.txt
 # Cache
 .cache/
