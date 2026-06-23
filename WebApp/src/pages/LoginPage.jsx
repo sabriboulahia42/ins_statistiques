@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import '../styles/LoginPage.css';
 
@@ -10,16 +10,52 @@ export default function LoginPage() {
   const [name, setName] = useState('');
   const [localError, setLocalError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fbSdkReady, setFbSdkReady] = useState(false);
 
-  // Determine the backend URL based on where the user is visiting
+  // Determine backend URL based on environment
   const getBackendUrl = () => {
-    const hostname = window.location.hostname;
-    if (hostname === 'ins-statistiques.onrender.com') {
-      return 'https://ins-statistiques.onrender.com';
-    }
-    // Default to local for development
-    return 'http://localhost:3080';
+    return window.location.hostname === 'localhost' 
+      ? 'http://localhost:3080' 
+      : 'https://ins-statistiques.onrender.com';
   };
+
+  // Initialize Facebook SDK
+  useEffect(() => {
+    const appId = process.env.REACT_APP_FACEBOOK_APP_ID; // Set this in your .env or Render vars
+
+    if (!appId) {
+      console.warn('Facebook App ID not found. Social login may fall back to redirect.');
+      return;
+    }
+
+    window.fbAsyncInit = () => {
+      window.FB.init({
+        appId: appId,
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+
+      setFbSdkReady(true);
+
+      // Check login status immediately after SDK loads
+      window.FB.getLoginStatus((response) => {
+        if (response.status === 'connected') {
+          // User is already logged into Facebook and your app
+          handleFacebookTokenLogin(response.authResponse.accessToken);
+        }
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,23 +65,55 @@ export default function LoginPage() {
     try {
       if (isLoginMode) {
         await login(email, password);
-        // Redirect to dashboard
         window.location.href = '/dashboard';
       } else {
-        // Registration would go here
         setLocalError('Registration not implemented yet. Use login with admin@ins.tn / admin123');
       }
     } catch (err) {
-      setLocalError(err.message);
+      setLocalError(err.message || 'Login failed');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleFacebookTokenLogin = async (accessToken) => {
+    try {
+      // Send token to your backend to verify and create session
+      const response = await fetch(`${getBackendUrl()}/auth/facebook/callback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        // Assuming your backend returns a token/user similar to standard login
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        window.location.href = '/dashboard';
+      } else {
+        throw new Error('Facebook login verification failed');
+      }
+    } catch (err) {
+      setLocalError(err.message);
+    }
+  };
+
   const handleOAuthLogin = (provider) => {
-    const baseUrl = getBackendUrl();
-    // Redirect to the correct backend OAuth route
-    window.location.href = `${baseUrl}/auth/${provider}`;
+    if (provider === 'facebook' && window.FB && fbSdkReady) {
+      // Use Facebook SDK Popup
+      window.FB.login((response) => {
+        if (response.authResponse) {
+          handleFacebookTokenLogin(response.authResponse.accessToken);
+        } else {
+          setLocalError('User cancelled Facebook login or did not authorize.');
+        }
+      }, { scope: 'public_profile,email' });
+    } else {
+      // Fallback to direct redirect for Google, X, GitHub or if FB SDK fails
+      const baseUrl = getBackendUrl();
+      window.location.href = `${baseUrl}/auth/${provider}`;
+    }
   };
 
   return (
@@ -114,6 +182,7 @@ export default function LoginPage() {
             type="button"
             className="btn btn-social btn-facebook"
             onClick={() => handleOAuthLogin('facebook')}
+            disabled={!fbSdkReady && process.env.REACT_APP_FACEBOOK_APP_ID}
           >
             <svg className="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/>
