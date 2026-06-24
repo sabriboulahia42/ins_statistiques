@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node proxy.js",
     "dev": "node dev-runner.js",
-    "build": "vite build"
+    "build": "cd WebApp && npm install && npm run build"
     "build:exporter": "npx esbuild exporter/exporter.ts --bundle --outfile=exporter.js --format=iife --platform=browser --target=es2020 --sourcemap",
     "geo-test": "node -e \"const f=require('node-fetch');f('http://localhost:3000/api/geo').then(r=>r.json()).then(console.log).catch(console.error)\"",
     "check": "node --check proxy.js app.js geo-adapter.js exporter.js cache-manager.js"
