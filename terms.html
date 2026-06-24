@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شروط الاستخدام | Conditions d'utilisation | Terms of Use</title>
+  <meta name="description"
+    content="شروط استخدام بوابة إحصائيات تونس — Conditions d'utilisation du portail Statistiques Tunisie — Terms of Use for Tunisia Statistics Portal." />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* ── Legal Page Specific Styles ── */
+    .legal-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+    }
+    .legal-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(220, 10, 38, 0.1);
+      border: 1px solid rgba(220, 10, 38, 0.3);
+      border-radius: 50px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--red-light);
+      margin-bottom: 1.5rem;
+      animation: fade-in-down 0.6s ease;
+    }
+    .legal-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      animation: fade-in-up 0.8s ease 0.1s both;
+    }
+    .legal-hero h1 .highlight {
+      background: linear-gradient(135deg, var(--red-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .legal-hero .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      animation: fade-in-up 0.8s ease 0.2s both;
+    }
+    .legal-main {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .lang-pill {
+      padding: 0.45rem 1.2rem;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .lang-pill.active,
+    .lang-pill:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+    .legal-section {
+      display: none;
+    }
+    .legal-section.active {
+      display: block;
+      animation: section-in 0.4s ease;
+    }
+    .legal-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+    .legal-card:hover {
+      border-color: rgba(220, 10, 38, 0.2);
+      box-shadow: 0 8px 32px rgba(220, 10, 38, 0.05);
+    }
+    .legal-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: rgba(220, 10, 38, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .legal-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .legal-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+    .legal-card p:last-child {
+      margin-bottom: 0;
+    }
+    .legal-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+    .legal-card ul li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0;
+      padding-inline-start: 1.5rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .legal-card ul li::before {
+      content: '▸';
+      color: var(--red-light);
+      position: absolute;
+      inset-inline-start: 0;
+    }
+    .legal-card a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .legal-card a:hover {
+      text-decoration: underline;
+    }
+    .update-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px solid rgba(245, 166, 35, 0.2);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      color: var(--text-primary);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      margin-bottom: 2rem;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+    .nav-logo a {
+      text-decoration: none;
+      color: inherit;
+    }
+    @media (max-width: 768px) {
+      .legal-hero { padding: 3rem 1rem 2rem; }
+    }
+  </style>
+</head>
+
+<body class="rtl">
+
+  <!-- Background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="nav-logo">
+        <a href="index.html">
+          <span class="flag">🇹🇳</span>
+          <span id="logo-text">إحصائيات تونس</span>
+        </a>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="back-btn" style="margin-bottom:0;">← <span id="back-label">الرئيسية</span></a>
+        <button class="lang-btn" id="lang-btn" onclick="cycleLang()">FR</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="legal-hero">
+    <div class="legal-hero-badge">📋 <span id="badge-text">شروط الاستخدام</span></div>
+    <h1><span class="highlight" id="page-title">شروط الاستخدام</span></h1>
+    <p class="subtitle" id="page-subtitle">يُرجى قراءة شروط الاستخدام بعناية قبل استخدام بوابتنا</p>
+  </section>
+
+  <main class="legal-main">
+
+    <!-- Language switcher -->
+    <div class="lang-switcher">
+      <button class="lang-pill active" onclick="setLang('ar')" id="pill-ar">العربية</button>
+      <button class="lang-pill" onclick="setLang('fr')" id="pill-fr">Français</button>
+      <button class="lang-pill" onclick="setLang('en')" id="pill-en">English</button>
+    </div>
+
+    <!-- Update badge -->
+    <div style="text-align:center; margin-bottom:2rem;">
+      <span class="update-badge">📅 <span id="update-label">آخر تحديث</span>: <span id="update-date">يونيو 2025</span></span>
+    </div>
+
+    <!-- Arabic version -->
+    <div class="legal-section active" id="section-ar" dir="rtl">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📖</div>
+          <div class="legal-card-title">قبول الشروط</div>
+        </div>
+        <p>
+          مرحباً بكم في بوابة <strong>إحصائيات تونس</strong>، منصة تفاعلية للإحصائيات الاقتصادية التونسية مُعدّة لتلاميذ السنة التاسعة أساسي ومُصدرها المعهد الوطني للإحصاء (INS).
+        </p>
+        <p>
+          باستخدامك لهذه البوابة، فإنك توافق على الالتزام بشروط الاستخدام التالية. إذا كنت لا توافق على هذه الشروط، يُرجى التوقف عن استخدام البوابة.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🎯</div>
+          <div class="legal-card-title">الغرض من البوابة</div>
+        </div>
+        <p>تُقدّم هذه البوابة إحصائيات اقتصادية حول تونس في المجالات التالية:</p>
+        <ul>
+          <li>القطاع الفلاحي (الحبوب، زيت الزيتون، التمور، الصيد البحري)</li>
+          <li>قطاع السياحة (الوافدون، الليالي الفندقية، العائدات)</li>
+          <li>القطاع الصناعي (مؤشر الإنتاج، توزيع القطاعات)</li>
+          <li>الصناعة التقليدية (الحرفيون، الصادرات، أنواع الحرف)</li>
+          <li>الخصائص الديمغرافية (السكان، التوزيع العمري والجغرافي)</li>
+          <li>التبادل التجاري الخارجي (الصادرات، الواردات، الميزان التجاري)</li>
+        </ul>
+        <p>
+          البوابة مُخصّصة للأغراض التعليمية والبحثية، ومصادر بياناتها معهد الوطني للإحصاء التونسي.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">✅</div>
+          <div class="legal-card-title">الاستخدام المسموح</div>
+        </div>
+        <p>يُسمح لك باستخدام هذه البوابة من أجل:</p>
+        <ul>
+          <li>الاطلاع على الإحصائيات الاقتصادية وفهمها لأغراض تعليمية</li>
+          <li>تصدير البيانات واستخدامها في الأعمال المدرسية والبحثية مع الإشارة إلى المصدر</li>
+          <li>مشاركة روابط البوابة مع الأقران والمعلمين</li>
+          <li>استخدام أدوات التحليل والتصور المدمجة في البوابة</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🚫</div>
+          <div class="legal-card-title">الاستخدام المحظور</div>
+        </div>
+        <p>يُحظر عليك:</p>
+        <ul>
+          <li>استخدام البوابة لأغراض تجارية دون إذن مسبق</li>
+          <li>نسخ أو إعادة نشر المحتوى دون الإشارة إلى المصدر (INS تونس)</li>
+          <li>محاولة اختراق أو تعطيل خدمات البوابة</li>
+          <li>تقديم معلومات مضللة أو مزيّفة عبر أدوات الطلبات</li>
+          <li>انتهاك حقوق الملكية الفكرية للمعهد الوطني للإحصاء</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">دقة البيانات وإخلاء المسؤولية</div>
+        </div>
+        <p>
+          تُعتمد البيانات المعروضة على بوابتنا من المعهد الوطني للإحصاء (INS) التونسي وتُحدَّث دوريًا. مع ذلك، لا نضمن دقة كل المعطيات في جميع الأوقات.
+        </p>
+        <p>
+          نُوصي دائمًا بالرجوع إلى المصدر الأصلي على <a href="http://dataportal.ins.tn" target="_blank">dataportal.ins.tn</a> للحصول على البيانات الرسمية والمحدّثة.
+        </p>
+        <p>
+          لا تتحمّل إدارة البوابة أي مسؤولية قانونية عن قرارات تُتّخذ بناءً على المعطيات المعروضة.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔒</div>
+          <div class="legal-card-title">الخصوصية وملفات تعريف الارتباط</div>
+        </div>
+        <p>
+          تستخدم البوابة <strong>Google Analytics</strong> لتتبع الزيارات وتحسين تجربة المستخدم. تتم معالجة البيانات وفق سياسة خصوصية Google.
+        </p>
+        <p>
+          لمزيد من التفاصيل حول كيفية معالجة بياناتك، يُرجى مراجعة <a href="privacy.html">سياسة الخصوصية</a>.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">⚖️</div>
+          <div class="legal-card-title">القانون المنظِّم</div>
+        </div>
+        <p>
+          تخضع هذه الشروط للقانون التونسي. أي نزاع يُحال إلى المحاكم المختصة في تونس.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">التواصل</div>
+        </div>
+        <p>
+          لأي استفسار بخصوص شروط الاستخدام، يُمكنك التواصل مع المعهد الوطني للإحصاء عبر موقعه الرسمي:
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-ar -->
+
+    <!-- French version -->
+    <div class="legal-section" id="section-fr" dir="ltr">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📖</div>
+          <div class="legal-card-title">Acceptation des conditions</div>
+        </div>
+        <p>
+          Bienvenue sur le portail <strong>Statistiques de la Tunisie</strong>, une plateforme interactive de statistiques économiques tunisiennes conçue pour les élèves de 9ème année et alimentée par l'Institut National des Statistiques (INS).
+        </p>
+        <p>
+          En utilisant ce portail, vous acceptez de vous conformer aux présentes conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez cesser d'utiliser le portail.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🎯</div>
+          <div class="legal-card-title">Objet du portail</div>
+        </div>
+        <p>Ce portail présente des statistiques économiques sur la Tunisie dans les domaines suivants :</p>
+        <ul>
+          <li>Secteur agricole (céréales, huile d'olive, dattes, pêche maritime)</li>
+          <li>Secteur touristique (arrivées, nuitées hôtelières, recettes)</li>
+          <li>Secteur industriel (indice de production, répartition sectorielle)</li>
+          <li>Artisanat traditionnel (artisans, exportations, types de métiers)</li>
+          <li>Démographie (population, répartition par âge et par zone)</li>
+          <li>Commerce extérieur (exportations, importations, balance commerciale)</li>
+        </ul>
+        <p>
+          Le portail est destiné à un usage éducatif et de recherche. Les données proviennent de l'Institut National des Statistiques tunisien.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">✅</div>
+          <div class="legal-card-title">Utilisations autorisées</div>
+        </div>
+        <p>Vous êtes autorisé à utiliser ce portail pour :</p>
+        <ul>
+          <li>Consulter et comprendre les statistiques économiques à des fins éducatives</li>
+          <li>Exporter et utiliser les données dans des travaux scolaires et de recherche, en citant la source</li>
+          <li>Partager des liens vers le portail avec vos pairs et enseignants</li>
+          <li>Utiliser les outils d'analyse et de visualisation intégrés au portail</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🚫</div>
+          <div class="legal-card-title">Utilisations interdites</div>
+        </div>
+        <p>Il vous est interdit de :</p>
+        <ul>
+          <li>Utiliser le portail à des fins commerciales sans autorisation préalable</li>
+          <li>Reproduire ou republier le contenu sans citer la source (INS Tunisie)</li>
+          <li>Tenter de pirater ou de perturber les services du portail</li>
+          <li>Soumettre des informations erronées ou trompeuses via les outils de demande</li>
+          <li>Violer les droits de propriété intellectuelle de l'Institut National des Statistiques</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">Exactitude des données et clause de non-responsabilité</div>
+        </div>
+        <p>
+          Les données affichées sur notre portail proviennent de l'Institut National des Statistiques (INS) tunisien et sont mises à jour périodiquement. Néanmoins, nous ne garantissons pas l'exactitude de toutes les données en tout temps.
+        </p>
+        <p>
+          Nous recommandons toujours de consulter la source originale sur <a href="http://dataportal.ins.tn" target="_blank">dataportal.ins.tn</a> pour obtenir des données officielles et à jour.
+        </p>
+        <p>
+          L'administration du portail ne saurait être tenue responsable des décisions prises sur la base des données affichées.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔒</div>
+          <div class="legal-card-title">Confidentialité et cookies</div>
+        </div>
+        <p>
+          Le portail utilise <strong>Google Analytics</strong> pour suivre les visites et améliorer l'expérience utilisateur. Les données sont traitées conformément à la politique de confidentialité de Google.
+        </p>
+        <p>
+          Pour plus de détails sur la manière dont vos données sont traitées, veuillez consulter notre <a href="privacy.html">Politique de confidentialité</a>.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">⚖️</div>
+          <div class="legal-card-title">Droit applicable</div>
+        </div>
+        <p>
+          Les présentes conditions sont régies par le droit tunisien. Tout litige sera soumis aux tribunaux compétents en Tunisie.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">Contact</div>
+        </div>
+        <p>
+          Pour toute question concernant les conditions d'utilisation, vous pouvez contacter l'Institut National des Statistiques via son site officiel :
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-fr -->
+
+    <!-- English version -->
+    <div class="legal-section" id="section-en" dir="ltr">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📖</div>
+          <div class="legal-card-title">Acceptance of Terms</div>
+        </div>
+        <p>
+          Welcome to the <strong>Tunisia Statistics</strong> portal, an interactive platform for Tunisian economic statistics designed for 9th grade students and powered by the National Institute of Statistics (INS).
+        </p>
+        <p>
+          By using this portal, you agree to comply with the following terms of use. If you do not agree to these terms, please stop using the portal.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🎯</div>
+          <div class="legal-card-title">Purpose of the Portal</div>
+        </div>
+        <p>This portal provides economic statistics on Tunisia in the following areas:</p>
+        <ul>
+          <li>Agricultural sector (cereals, olive oil, dates, maritime fishing)</li>
+          <li>Tourism sector (arrivals, hotel nights, receipts)</li>
+          <li>Industrial sector (production index, sector distribution)</li>
+          <li>Traditional crafts (artisans, exports, craft types)</li>
+          <li>Demographics (population, age and geographic distribution)</li>
+          <li>Foreign trade (exports, imports, trade balance)</li>
+        </ul>
+        <p>
+          The portal is intended for educational and research purposes. Data sources are the Tunisian National Institute of Statistics.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">✅</div>
+          <div class="legal-card-title">Permitted Uses</div>
+        </div>
+        <p>You are permitted to use this portal to:</p>
+        <ul>
+          <li>View and understand economic statistics for educational purposes</li>
+          <li>Export and use data in school and research work, citing the source</li>
+          <li>Share portal links with peers and teachers</li>
+          <li>Use the built-in analysis and visualization tools</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🚫</div>
+          <div class="legal-card-title">Prohibited Uses</div>
+        </div>
+        <p>You are prohibited from:</p>
+        <ul>
+          <li>Using the portal for commercial purposes without prior authorization</li>
+          <li>Copying or republishing content without citing the source (INS Tunisia)</li>
+          <li>Attempting to hack or disrupt portal services</li>
+          <li>Submitting false or misleading information through request tools</li>
+          <li>Violating the intellectual property rights of the National Institute of Statistics</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">Data Accuracy & Disclaimer</div>
+        </div>
+        <p>
+          The data displayed on our portal comes from the Tunisian National Institute of Statistics (INS) and is updated periodically. However, we do not guarantee the accuracy of all data at all times.
+        </p>
+        <p>
+          We always recommend consulting the original source at <a href="http://dataportal.ins.tn" target="_blank">dataportal.ins.tn</a> for official and up-to-date data.
+        </p>
+        <p>
+          The portal administration shall not be held liable for any decisions made based on the data displayed.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔒</div>
+          <div class="legal-card-title">Privacy & Cookies</div>
+        </div>
+        <p>
+          The portal uses <strong>Google Analytics</strong> to track visits and improve user experience. Data is processed in accordance with Google's privacy policy.
+        </p>
+        <p>
+          For more details on how your data is processed, please review our <a href="privacy.html">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">⚖️</div>
+          <div class="legal-card-title">Governing Law</div>
+        </div>
+        <p>
+          These terms are governed by Tunisian law. Any dispute shall be submitted to the competent courts in Tunisia.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">Contact</div>
+        </div>
+        <p>
+          For any questions regarding the terms of use, you can contact the National Institute of Statistics via its official website:
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-en -->
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="index.html">🇹🇳 إحصائيات تونس</a>
+      &nbsp;·&nbsp;
+      <a href="terms.html">شروط الاستخدام | Conditions | Terms</a>
+      &nbsp;·&nbsp;
+      <a href="privacy.html">الخصوصية | Confidentialité | Privacy</a>
+      &nbsp;·&nbsp;
+      <a href="http://dataportal.ins.tn" target="_blank">INS – dataportal.ins.tn</a>
+    </p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const LANG_META = {
+      ar: {
+        dir: 'rtl',
+        htmlLang: 'ar',
+        badge: 'شروط الاستخدام',
+        title: 'شروط الاستخدام',
+        subtitle: 'يُرجى قراءة شروط الاستخدام بعناية قبل استخدام بوابتنا',
+        logo: 'إحصائيات تونس',
+        nextBtn: 'FR',
+        back: 'الرئيسية',
+        updateLabel: 'آخر تحديث',
+        updateDate: 'يونيو 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      },
+      fr: {
+        dir: 'ltr',
+        htmlLang: 'fr',
+        badge: 'Conditions d\'utilisation',
+        title: 'Conditions d\'utilisation',
+        subtitle: 'Veuillez lire attentivement les conditions avant d\'utiliser notre portail',
+        logo: 'Statistiques Tunisie',
+        nextBtn: 'EN',
+        back: 'Accueil',
+        updateLabel: 'Dernière mise à jour',
+        updateDate: 'Juin 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      },
+      en: {
+        dir: 'ltr',
+        htmlLang: 'en',
+        badge: 'Terms of Use',
+        title: 'Terms of Use',
+        subtitle: 'Please read the terms of use carefully before using our portal',
+        logo: 'Tunisia Statistics',
+        nextBtn: 'AR',
+        back: 'Home',
+        updateLabel: 'Last updated',
+        updateDate: 'June 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      }
+    };
+
+    let currentLang = 'ar';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const m = LANG_META[lang];
+
+      // HTML & body
+      document.documentElement.lang = m.htmlLang;
+      document.body.classList.toggle('rtl', lang === 'ar');
+
+      // Meta
+      document.getElementById('badge-text').textContent = m.badge;
+      document.getElementById('page-title').textContent = m.title;
+      document.getElementById('page-subtitle').textContent = m.subtitle;
+      document.getElementById('logo-text').textContent = m.logo;
+      document.getElementById('lang-btn').textContent = m.nextBtn;
+      document.getElementById('back-label').textContent = m.back;
+      document.getElementById('update-label').textContent = m.updateLabel;
+      document.getElementById('update-date').textContent = m.updateDate;
+
+      // Pills
+      document.getElementById('pill-ar').textContent = m.pillAr;
+      document.getElementById('pill-fr').textContent = m.pillFr;
+      document.getElementById('pill-en').textContent = m.pillEn;
+      document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('pill-' + lang).classList.add('active');
+
+      // Sections
+      document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('section-' + lang).classList.add('active');
+    }
+
+    function cycleLang() {
+      const order = ['ar', 'fr', 'en'];
+      const next = order[(order.indexOf(currentLang) + 1) % order.length];
+      setLang(next);
+    }
+
+    // Init
+    setLang('ar');
+  </script>
+
+</body>
+</html>

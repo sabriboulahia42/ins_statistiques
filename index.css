@@ -361,6 +361,17 @@ footer {
   font-size: 0.85rem;
 }
 footer a { color: var(--red-light); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+footer #footer-terms, footer #footer-privacy {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  opacity: 0.7;
+  transition: var(--transition);
+}
+footer #footer-terms:hover, footer #footer-privacy:hover {
+  color: var(--gold);
+  opacity: 1;
+}
 
 /* ── Animations ─────────────────────────────────────────── */
 @keyframes fade-in-up {

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سياسة الخصوصية | Politique de confidentialité | Privacy Policy</title>
+  <meta name="description"
+    content="سياسة الخصوصية لبوابة إحصائيات تونس — Politique de confidentialité du portail Statistiques Tunisie — Privacy Policy for Tunisia Statistics Portal." />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* ── Legal Page Specific Styles ── */
+    .legal-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+    }
+    .legal-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 166, 35, 0.1);
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      border-radius: 50px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      animation: fade-in-down 0.6s ease;
+    }
+    .legal-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      animation: fade-in-up 0.8s ease 0.1s both;
+    }
+    .legal-hero h1 .highlight {
+      background: linear-gradient(135deg, var(--gold), var(--red-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .legal-hero .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      animation: fade-in-up 0.8s ease 0.2s both;
+    }
+    .legal-main {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .lang-pill {
+      padding: 0.45rem 1.2rem;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .lang-pill.active,
+    .lang-pill:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-deep);
+    }
+    .legal-section {
+      display: none;
+    }
+    .legal-section.active {
+      display: block;
+      animation: section-in 0.4s ease;
+    }
+    .legal-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+    .legal-card:hover {
+      border-color: rgba(245, 166, 35, 0.2);
+      box-shadow: 0 8px 32px rgba(245, 166, 35, 0.05);
+    }
+    .legal-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: rgba(245, 166, 35, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .legal-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .legal-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+    .legal-card p:last-child {
+      margin-bottom: 0;
+    }
+    .legal-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+    .legal-card ul li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0;
+      padding-inline-start: 1.5rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .legal-card ul li::before {
+      content: '▸';
+      color: var(--gold);
+      position: absolute;
+      inset-inline-start: 0;
+    }
+    .legal-card a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .legal-card a:hover {
+      text-decoration: underline;
+    }
+    .legal-card strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .update-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px solid rgba(245, 166, 35, 0.2);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      padding: 0.75rem;
+      text-align: start;
+      border-bottom: 2px solid var(--border);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .data-table td {
+      padding: 0.7rem 0.75rem;
+      text-align: start;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .cookie-type-badge {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-necessary { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .badge-analytics { background: rgba(59,130,246,0.15); color: #3b82f6; }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      color: var(--text-primary);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-deep);
+    }
+    .nav-logo a {
+      text-decoration: none;
+      color: inherit;
+    }
+    @media (max-width: 768px) {
+      .legal-hero { padding: 3rem 1rem 2rem; }
+      .data-table { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+
+<body class="rtl">
+
+  <!-- Background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="nav-logo">
+        <a href="index.html">
+          <span class="flag">🇹🇳</span>
+          <span id="logo-text">إحصائيات تونس</span>
+        </a>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="back-btn" style="margin-bottom:0;">← <span id="back-label">الرئيسية</span></a>
+        <button class="lang-btn" id="lang-btn" onclick="cycleLang()">FR</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="legal-hero">
+    <div class="legal-hero-badge">🔒 <span id="badge-text">سياسة الخصوصية</span></div>
+    <h1><span class="highlight" id="page-title">سياسة الخصوصية</span></h1>
+    <p class="subtitle" id="page-subtitle">نحن نهتم بخصوصيتك ونلتزم بحماية بياناتك الشخصية</p>
+  </section>
+
+  <main class="legal-main">
+
+    <!-- Language switcher -->
+    <div class="lang-switcher">
+      <button class="lang-pill active" onclick="setLang('ar')" id="pill-ar">العربية</button>
+      <button class="lang-pill" onclick="setLang('fr')" id="pill-fr">Français</button>
+      <button class="lang-pill" onclick="setLang('en')" id="pill-en">English</button>
+    </div>
+
+    <!-- Update badge -->
+    <div style="text-align:center; margin-bottom:2rem;">
+      <span class="update-badge">📅 <span id="update-label">آخر تحديث</span>: <span id="update-date">يونيو 2025</span></span>
+    </div>
+
+    <!-- Arabic version -->
+    <div class="legal-section active" id="section-ar" dir="rtl">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">👋</div>
+          <div class="legal-card-title">مقدمة</div>
+        </div>
+        <p>
+          تُوضّح سياسة الخصوصية هذه كيفية جمع بوابة <strong>إحصائيات تونس</strong> ومعالجة وحماية المعلومات التي قد تُقدّمها أثناء استخدامك للبوابة.
+        </p>
+        <p>
+          نحن نحترم خصوصيتك ونلتزم بحمايتها وفق المعايير المعمول بها. لا نجمع أي معلومات شخصية تعريفية إلا عند الضرورة القصوى.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📥</div>
+          <div class="legal-card-title">البيانات التي نجمعها</div>
+        </div>
+        <p>تجمع بوابتنا تلقائياً البيانات التالية عند زيارتك:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>نوع البيانات</th>
+              <th>الغرض</th>
+              <th>المدة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>عنوان IP (مجهول الهوية)</td>
+              <td>التحليل الجغرافي وتحسين الأداء</td>
+              <td>جلسة الزيارة</td>
+            </tr>
+            <tr>
+              <td>نوع المتصفح والجهاز</td>
+              <td>ضمان التوافق التقني</td>
+              <td>26 شهرًا</td>
+            </tr>
+            <tr>
+              <td>الصفحات المزارة والوقت</td>
+              <td>تحسين تجربة المستخدم</td>
+              <td>26 شهرًا</td>
+            </tr>
+            <tr>
+              <td>الأقسام والتبويبات المستخدمة</td>
+              <td>فهم الاهتمامات التعليمية</td>
+              <td>26 شهرًا</td>
+            </tr>
+            <tr>
+              <td>تصدير البيانات (النوع فقط)</td>
+              <td>إحصاءات الاستخدام</td>
+              <td>26 شهرًا</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>لا نجمع: الاسم، البريد الإلكتروني، رقم الهاتف، أو أي معلومات شخصية مباشرة.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🍪</div>
+          <div class="legal-card-title">ملفات تعريف الارتباط (Cookies)</div>
+        </div>
+        <p>نستخدم نوعين من ملفات تعريف الارتباط:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الملف</th>
+              <th>النوع</th>
+              <th>الغرض</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga, _ga_*</td>
+              <td><span class="cookie-type-badge badge-analytics">تحليلي</span></td>
+              <td>Google Analytics — تتبع الزيارات بشكل مجهول</td>
+            </tr>
+            <tr>
+              <td>ins_cookie_consent</td>
+              <td><span class="cookie-type-badge badge-necessary">ضروري</span></td>
+              <td>حفظ تفضيل موافقتك على ملفات الارتباط</td>
+            </tr>
+            <tr>
+              <td>ins_lang</td>
+              <td><span class="cookie-type-badge badge-necessary">ضروري</span></td>
+              <td>حفظ اختيار اللغة (عربي / فرنسي / إنجليزي)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          يمكنك رفض ملفات تعريف الارتباط التحليلية من خلال زر <strong>"لا أوافق"</strong> في لافتة الموافقة التي تظهر عند زيارتك الأولى للموقع.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">Google Analytics وGoogle Consent Mode</div>
+        </div>
+        <p>
+          نستخدم <strong>Google Analytics 4 (GA4)</strong> مع <strong>Google Consent Mode v2</strong>. يعني ذلك:
+        </p>
+        <ul>
+          <li>قبل موافقتك: تُرسل بيانات مُجهّلة الهوية فقط (Modeled Conversions)</li>
+          <li>بعد موافقتك: يُفعَّل التتبع الكامل مع تجهيل عنوان IP</li>
+          <li>عند الرفض: تُوقف جميع ملفات تعريف الارتباط التحليلية</li>
+        </ul>
+        <p>
+          لمعرفة كيفية تعامل Google مع بياناتك: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🌍</div>
+          <div class="legal-card-title">التكيّف الجغرافي</div>
+        </div>
+        <p>
+          تستخدم البوابة خدمة <strong>ipapi.co</strong> لتحديد موقعك الجغرافي التقريبي (الدولة والمدينة) بهدف:
+        </p>
+        <ul>
+          <li>عرض تحية ترحيبية مخصصة</li>
+          <li>اقتراح لغة العرض المناسبة</li>
+          <li>ضبط الألوان وفق هوية المنطقة الجغرافية</li>
+        </ul>
+        <p>لا يُخزَّن عنوان IP الخاص بك ولا يُشارك مع أي طرف ثالث عدا خدمة ipapi.co.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🛡️</div>
+          <div class="legal-card-title">حقوقك</div>
+        </div>
+        <p>يحق لك في أي وقت:</p>
+        <ul>
+          <li>الاطلاع على البيانات المجمّعة عنك (إن وُجدت)</li>
+          <li>طلب حذف بياناتك من أنظمة Google Analytics عبر: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out</a></li>
+          <li>تغيير موافقتك على ملفات تعريف الارتباط في أي وقت</li>
+          <li>مسح بيانات المتصفح المحلية (السجل، اللغة المختارة) من متصفحك</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔄</div>
+          <div class="legal-card-title">تحديثات سياسة الخصوصية</div>
+        </div>
+        <p>
+          قد نُحدّث هذه السياسة دوريًا. سيُذكر تاريخ آخر تحديث في أعلى الصفحة. ننصحك بمراجعة هذه السياسة بصفة منتظمة.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">التواصل</div>
+        </div>
+        <p>
+          لأي استفسار بخصوص سياسة الخصوصية أو لممارسة حقوقك، يُمكنك التواصل عبر الموقع الرسمي للمعهد الوطني للإحصاء:
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-ar -->
+
+    <!-- French version -->
+    <div class="legal-section" id="section-fr" dir="ltr">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">👋</div>
+          <div class="legal-card-title">Introduction</div>
+        </div>
+        <p>
+          La présente politique de confidentialité explique comment le portail <strong>Statistiques Tunisie</strong> collecte, traite et protège les informations que vous pouvez fournir lors de votre utilisation du portail.
+        </p>
+        <p>
+          Nous respectons votre vie privée et nous engageons à la protéger conformément aux normes en vigueur. Nous ne collectons aucune information personnelle identifiable sauf en cas de nécessité absolue.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📥</div>
+          <div class="legal-card-title">Données collectées</div>
+        </div>
+        <p>Notre portail collecte automatiquement les données suivantes lors de votre visite :</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Type de données</th>
+              <th>Finalité</th>
+              <th>Durée</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Adresse IP (anonymisée)</td>
+              <td>Analyse géographique et optimisation des performances</td>
+              <td>Session de visite</td>
+            </tr>
+            <tr>
+              <td>Type de navigateur et d'appareil</td>
+              <td>Assurer la compatibilité technique</td>
+              <td>26 mois</td>
+            </tr>
+            <tr>
+              <td>Pages visitées et durée</td>
+              <td>Améliorer l'expérience utilisateur</td>
+              <td>26 mois</td>
+            </tr>
+            <tr>
+              <td>Sections et onglets utilisés</td>
+              <td>Comprendre les intérêts éducatifs</td>
+              <td>26 mois</td>
+            </tr>
+            <tr>
+              <td>Exports de données (type uniquement)</td>
+              <td>Statistiques d'utilisation</td>
+              <td>26 mois</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Nous ne collectons pas : nom, e-mail, numéro de téléphone ou toute autre information personnelle directe.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🍪</div>
+          <div class="legal-card-title">Cookies</div>
+        </div>
+        <p>Nous utilisons deux types de cookies :</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Type</th>
+              <th>Finalité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga, _ga_*</td>
+              <td><span class="cookie-type-badge badge-analytics">Analytique</span></td>
+              <td>Google Analytics — suivi anonymisé des visites</td>
+            </tr>
+            <tr>
+              <td>ins_cookie_consent</td>
+              <td><span class="cookie-type-badge badge-necessary">Nécessaire</span></td>
+              <td>Mémorisation de votre consentement aux cookies</td>
+            </tr>
+            <tr>
+              <td>ins_lang</td>
+              <td><span class="cookie-type-badge badge-necessary">Nécessaire</span></td>
+              <td>Mémorisation du choix de langue (arabe/français/anglais)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Vous pouvez refuser les cookies analytiques en cliquant sur <strong>"Refuser"</strong> dans la bannière de consentement qui s'affiche lors de votre première visite.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">Google Analytics et Google Consent Mode</div>
+        </div>
+        <p>
+          Nous utilisons <strong>Google Analytics 4 (GA4)</strong> avec <strong>Google Consent Mode v2</strong>. Cela signifie :
+        </p>
+        <ul>
+          <li>Avant votre consentement : seules des données anonymisées sont envoyées (Modeled Conversions)</li>
+          <li>Après votre consentement : le suivi complet est activé avec anonymisation de l'IP</li>
+          <li>En cas de refus : tous les cookies analytiques sont désactivés</li>
+        </ul>
+        <p>
+          Pour savoir comment Google traite vos données : <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🌍</div>
+          <div class="legal-card-title">Adaptation géographique</div>
+        </div>
+        <p>
+          Le portail utilise le service <strong>ipapi.co</strong> pour déterminer votre emplacement géographique approximatif (pays et ville) afin de :
+        </p>
+        <ul>
+          <li>Afficher un message de bienvenue personnalisé</li>
+          <li>Suggérer la langue d'affichage appropriée</li>
+          <li>Adapter les couleurs à l'identité géographique de la région</li>
+        </ul>
+        <p>Votre adresse IP n'est ni stockée ni partagée avec un tiers autre que le service ipapi.co.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🛡️</div>
+          <div class="legal-card-title">Vos droits</div>
+        </div>
+        <p>Vous pouvez à tout moment :</p>
+        <ul>
+          <li>Accéder aux données collectées vous concernant (le cas échéant)</li>
+          <li>Demander la suppression de vos données des systèmes Google Analytics via : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out</a></li>
+          <li>Modifier votre consentement aux cookies à tout moment</li>
+          <li>Effacer les données locales du navigateur (historique, langue choisie) depuis votre navigateur</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔄</div>
+          <div class="legal-card-title">Mises à jour de la politique</div>
+        </div>
+        <p>
+          Nous pouvons mettre à jour cette politique périodiquement. La date de dernière mise à jour sera indiquée en haut de la page. Nous vous recommandons de consulter cette politique régulièrement.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">Contact</div>
+        </div>
+        <p>
+          Pour toute question concernant la politique de confidentialité ou pour exercer vos droits, vous pouvez contacter l'Institut National des Statistiques via son site officiel :
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-fr -->
+
+    <!-- English version -->
+    <div class="legal-section" id="section-en" dir="ltr">
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">👋</div>
+          <div class="legal-card-title">Introduction</div>
+        </div>
+        <p>
+          This privacy policy explains how the <strong>Tunisia Statistics</strong> portal collects, processes and protects information you may provide while using the portal.
+        </p>
+        <p>
+          We respect your privacy and are committed to protecting it in accordance with applicable standards. We do not collect any personally identifiable information unless absolutely necessary.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📥</div>
+          <div class="legal-card-title">Data We Collect</div>
+        </div>
+        <p>Our portal automatically collects the following data when you visit:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Data Type</th>
+              <th>Purpose</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IP Address (anonymized)</td>
+              <td>Geographic analysis and performance optimization</td>
+              <td>Visit session</td>
+            </tr>
+            <tr>
+              <td>Browser and device type</td>
+              <td>Ensuring technical compatibility</td>
+              <td>26 months</td>
+            </tr>
+            <tr>
+              <td>Pages visited and duration</td>
+              <td>Improving user experience</td>
+              <td>26 months</td>
+            </tr>
+            <tr>
+              <td>Sections and tabs used</td>
+              <td>Understanding educational interests</td>
+              <td>26 months</td>
+            </tr>
+            <tr>
+              <td>Data exports (type only)</td>
+              <td>Usage statistics</td>
+              <td>26 months</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>We do not collect: name, email, phone number, or any other direct personal information.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🍪</div>
+          <div class="legal-card-title">Cookies</div>
+        </div>
+        <p>We use two types of cookies:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga, _ga_*</td>
+              <td><span class="cookie-type-badge badge-analytics">Analytics</span></td>
+              <td>Google Analytics — anonymized visit tracking</td>
+            </tr>
+            <tr>
+              <td>ins_cookie_consent</td>
+              <td><span class="cookie-type-badge badge-necessary">Necessary</span></td>
+              <td>Saves your cookie consent preference</td>
+            </tr>
+            <tr>
+              <td>ins_lang</td>
+              <td><span class="cookie-type-badge badge-necessary">Necessary</span></td>
+              <td>Saves your language choice (Arabic/French/English)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          You can reject analytics cookies by clicking <strong>"Reject"</strong> in the consent banner that appears on your first visit.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📊</div>
+          <div class="legal-card-title">Google Analytics & Google Consent Mode</div>
+        </div>
+        <p>
+          We use <strong>Google Analytics 4 (GA4)</strong> with <strong>Google Consent Mode v2</strong>. This means:
+        </p>
+        <ul>
+          <li>Before your consent: only anonymized data is sent (Modeled Conversions)</li>
+          <li>After your consent: full tracking is enabled with IP anonymization</li>
+          <li>If rejected: all analytics cookies are disabled</li>
+        </ul>
+        <p>
+          To learn how Google handles your data: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🌍</div>
+          <div class="legal-card-title">Geographic Adaptation</div>
+        </div>
+        <p>
+          The portal uses the <strong>ipapi.co</strong> service to determine your approximate geographic location (country and city) in order to:
+        </p>
+        <ul>
+          <li>Display a personalized welcome message</li>
+          <li>Suggest the appropriate display language</li>
+          <li>Adapt colors to the regional geographic identity</li>
+        </ul>
+        <p>Your IP address is neither stored nor shared with any third party other than the ipapi.co service.</p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🛡️</div>
+          <div class="legal-card-title">Your Rights</div>
+        </div>
+        <p>You may at any time:</p>
+        <ul>
+          <li>Access data collected about you (if any)</li>
+          <li>Request deletion of your data from Google Analytics systems via: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out</a></li>
+          <li>Change your cookie consent at any time</li>
+          <li>Clear local browser data (history, chosen language) from your browser settings</li>
+        </ul>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">🔄</div>
+          <div class="legal-card-title">Policy Updates</div>
+        </div>
+        <p>
+          We may update this policy periodically. The date of the last update will be indicated at the top of the page. We recommend reviewing this policy regularly.
+        </p>
+      </div>
+
+      <div class="legal-card">
+        <div class="legal-card-header">
+          <div class="legal-card-icon">📬</div>
+          <div class="legal-card-title">Contact</div>
+        </div>
+        <p>
+          For any questions regarding the privacy policy or to exercise your rights, you can contact the National Institute of Statistics via its official website:
+          <a href="http://www.ins.tn" target="_blank">www.ins.tn</a>
+        </p>
+      </div>
+
+    </div><!-- /section-en -->
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="index.html">🇹🇳 إحصائيات تونس</a>
+      &nbsp;·&nbsp;
+      <a href="terms.html">شروط الاستخدام | Conditions | Terms</a>
+      &nbsp;·&nbsp;
+      <a href="privacy.html">الخصوصية | Confidentialité | Privacy</a>
+      &nbsp;·&nbsp;
+      <a href="http://dataportal.ins.tn" target="_blank">INS – dataportal.ins.tn</a>
+    </p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const LANG_META = {
+      ar: {
+        dir: 'rtl',
+        htmlLang: 'ar',
+        badge: 'سياسة الخصوصية',
+        title: 'سياسة الخصوصية',
+        subtitle: 'نحن نهتم بخصوصيتك ونلتزم بحماية بياناتك الشخصية',
+        logo: 'إحصائيات تونس',
+        nextBtn: 'FR',
+        back: 'الرئيسية',
+        updateLabel: 'آخر تحديث',
+        updateDate: 'يونيو 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      },
+      fr: {
+        dir: 'ltr',
+        htmlLang: 'fr',
+        badge: 'Politique de confidentialité',
+        title: 'Politique de confidentialité',
+        subtitle: 'Nous attachons une grande importance à votre vie privée et nous engageons à protéger vos données',
+        logo: 'Statistiques Tunisie',
+        nextBtn: 'EN',
+        back: 'Accueil',
+        updateLabel: 'Dernière mise à jour',
+        updateDate: 'Juin 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      },
+      en: {
+        dir: 'ltr',
+        htmlLang: 'en',
+        badge: 'Privacy Policy',
+        title: 'Privacy Policy',
+        subtitle: 'We care about your privacy and are committed to protecting your personal data',
+        logo: 'Tunisia Statistics',
+        nextBtn: 'AR',
+        back: 'Home',
+        updateLabel: 'Last updated',
+        updateDate: 'June 2025',
+        pillAr: 'العربية', pillFr: 'Français', pillEn: 'English',
+      }
+    };
+
+    let currentLang = 'ar';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const m = LANG_META[lang];
+
+      document.documentElement.lang = m.htmlLang;
+      document.body.classList.toggle('rtl', lang === 'ar');
+
+      document.getElementById('badge-text').textContent = m.badge;
+      document.getElementById('page-title').textContent = m.title;
+      document.getElementById('page-subtitle').textContent = m.subtitle;
+      document.getElementById('logo-text').textContent = m.logo;
+      document.getElementById('lang-btn').textContent = m.nextBtn;
+      document.getElementById('back-label').textContent = m.back;
+      document.getElementById('update-label').textContent = m.updateLabel;
+      document.getElementById('update-date').textContent = m.updateDate;
+
+      document.getElementById('pill-ar').textContent = m.pillAr;
+      document.getElementById('pill-fr').textContent = m.pillFr;
+      document.getElementById('pill-en').textContent = m.pillEn;
+      document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('pill-' + lang).classList.add('active');
+
+      document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('section-' + lang).classList.add('active');
+    }
+
+    function cycleLang() {
+      const order = ['ar', 'fr', 'en'];
+      const next = order[(order.indexOf(currentLang) + 1) % order.length];
+      setLang(next);
+    }
+
+    setLang('ar');
+  </script>
+
+</body>
+</html>
