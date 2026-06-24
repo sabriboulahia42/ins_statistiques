@@ -332,6 +332,19 @@ app.post("/api/settings", requireAdmin, (req, res) => {
     res.status(500).json({ error: "Failed to save settings" });
   }
 });
+// ── 9. Catch-All Route for React Router ───────────────────────
+// Serves index.html for any unknown route so React Router can handle it
+app.get('*', (req, res) => {
+  // Adjust path if your build output is in a different folder
+  const indexPath = path.join(__dirname, 'WebApp', 'dist', 'index.html');
+  
+  // Fallback to root index.html if dist doesn't exist (for dev)
+  if (!fs.existsSync(indexPath)) {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  } else {
+    res.sendFile(indexPath);
+  }
+});
 
 // ── 5. Start server ───────────────────────────────────────────
 app.listen(PORT, HOST, () => {
