@@ -333,19 +333,28 @@ app.post("/api/settings", requireAdmin, (req, res) => {
   }
 });
 // ── 9. Catch-All Route for React Router ───────────────────────
-// Serves index.html for any unknown route so React Router can handle it
 app.get('*', (req, res) => {
-  // Adjust path if your build output is in a different folder
-  const indexPath = path.join(__dirname, 'WebApp', 'dist', 'index.html');
+  const reactIndexPath = path.join(__dirname, 'WebApp', 'dist', 'index.html');
   
-  // Fallback to root index.html if dist doesn't exist (for dev)
-  if (!fs.existsSync(indexPath)) {
-    res.sendFile(path.join(__dirname, 'index.html'));
+  // Check if the React build exists
+  if (fs.existsSync(reactIndexPath)) {
+    console.log(`[Router] Serving React App for: ${req.path}`);
+    res.sendFile(reactIndexPath);
   } else {
-    res.sendFile(indexPath);
+    // If no build exists, show a helpful error instead of the wrong page
+    console.error(`[Router] Build not found at ${reactIndexPath}. Did the Vite build fail?`);
+    res.status(500).send(`
+      <h1>React Build Missing</h1>
+      <p>The frontend build (WebApp/dist/index.html) was not found.</p>
+      <p><strong>Debug Steps:</strong></p>
+      <ol>
+        <li>Check Render Deployment Logs for "Vite build" errors.</li>
+        <li>Ensure your Render Build Command is: <code>cd WebApp && npm install && npm run build</code></li>
+        <li>Verify <code>WebApp/dist</code> exists in your repository (or is generated during build).</li>
+      </ol>
+    `);
   }
 });
-
 // ── 5. Start server ───────────────────────────────────────────
 app.listen(PORT, HOST, () => {
   const displayHost = (HOST === '0.0.0.0' || HOST === '::') ? 'localhost' : HOST;
