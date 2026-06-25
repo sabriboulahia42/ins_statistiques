@@ -3,7 +3,6 @@ __pycache__/
 *.o
 *.obj
 *.exe
-package-lock.json
 yarn.lock
 exporter.js.map
 *.dll
