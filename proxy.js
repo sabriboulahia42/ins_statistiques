@@ -334,7 +334,7 @@ app.post("/api/settings", requireAdmin, (req, res) => {
 });
 // ── 9. Catch-All Route for React Router ───────────────────────
 app.get('*', (req, res) => {
-  const reactIndexPath = path.join(__dirname, 'WebApp', 'dist', 'index.html');
+  const reactIndexPath = path.join(__dirname, 'WebApp', 'build', 'index.html');
   
   // Check if the React build exists
   if (fs.existsSync(reactIndexPath)) {
@@ -350,7 +350,7 @@ app.get('*', (req, res) => {
       <ol>
         <li>Check Render Deployment Logs for "Vite build" errors.</li>
         <li>Ensure your Render Build Command is: <code>cd WebApp && npm install && npm run build</code></li>
-        <li>Verify <code>WebApp/dist</code> exists in your repository (or is generated during build).</li>
+        <li>Verify <code>WebApp/build</code> exists in your repository (or is generated during build).</li>
       </ol>
     `);
   }
