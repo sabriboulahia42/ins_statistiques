@@ -4,15 +4,19 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 
-// Helper to get token (matches how you save it in LoginPage)
+// ── SECURITY GATE: Check Auth BEFORE rendering React ──────────
 const getToken = () => localStorage.getItem('token');
 const getUser = () => {
   const userStr = localStorage.getItem('user');
-  return userStr ? JSON.parse(userStr) : null;
+  try {
+    return userStr ? JSON.parse(userStr) : null;
+  } catch (e) {
+    return null;
+  }
 };
 
-// Protected Route Logic
 const currentPath = window.location.pathname;
+// Define public paths that do NOT require auth
 const publicPaths = ['/', '/login', '/privacy', '/terms'];
 const isPublicPath = publicPaths.some(path => currentPath.startsWith(path));
 
@@ -20,17 +24,17 @@ if (!isPublicPath) {
   const token = getToken();
   const user = getUser();
 
+  // If no token or no user found on a protected route, redirect to login
   if (!token || !user) {
-    // No token? Redirect to login immediately.
-    // The backend middleware will also block any API calls if they try to bypass this.
     console.warn('[Security] No valid session found. Redirecting to login.');
     window.location.href = '/login';
+    // Stop rendering React to prevent flash of content
+    throw new Error('Redirecting to login...');
   } else {
-    // Optional: Role-based redirection could happen here too, 
-    // but usually handled by the backend API responses or inside App.jsx
-    console.log('[Security] User authenticated:', user.email);
+    console.log('[Security] User authenticated:', user.email, 'Role:', user.role);
   }
 }
+// ───────────────────────────────────────────────────────────────
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -38,3 +42,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <App />
     </BrowserRouter>
   </React.StrictMode>,
+)
