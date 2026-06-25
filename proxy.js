@@ -43,9 +43,11 @@ app.use(cookieParser());
 // ── Passport initialization ──────────────────────────────────
 app.use(passport.initialize());
 
-// ── 1. Serve static files (index.html, app.js, data/, …) ──────
-app.use(express.static(path.join(__dirname)));
-
+// ── 1. Serve static files (Vite Build Output) ────────────────
+// Point directly to the Vite build folder so assets load correctly
+const buildPath = path.join(__dirname, 'WebApp', 'build');
+console.log(`[Static Server] Serving from: ${buildPath}`);
+app.use(express.static(buildPath));
 // ── 2. Accept raw XML in POST /api/ins  ───────────────────────
 app.use("/api/ins", express.text({ type: "*/*", limit: "1mb" }));
 
