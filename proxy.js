@@ -43,11 +43,14 @@ app.use(cookieParser());
 // ── Passport initialization ──────────────────────────────────
 app.use(passport.initialize());
 
-// ── 1. Serve static files (Vite Build Output) ────────────────
-// Point directly to the Vite build folder so assets load correctly
-const buildPath = path.join(__dirname, 'WebApp', 'build');
-console.log(`[Static Server] Serving from: ${buildPath}`);
-app.use(express.static(buildPath));
+// ── 1. Serve ROOT Static Files (Your Original Dashboard) ──────
+// This MUST come first. It serves root/index.html, app.js, css, etc.
+// This handles "/", "/privacy", "/terms" instantly.
+console.log(`[Static Server] Serving ROOT public files from: ${__dirname}`);
+app.use(express.static(__dirname, {
+  // Ignore the WebApp folder so React can handle it separately
+  ignore: ['WebApp', 'WebApp/build'] 
+}));
 // ── 2. Accept raw XML in POST /api/ins  ───────────────────────
 app.use("/api/ins", express.text({ type: "*/*", limit: "1mb" }));
 
@@ -335,21 +338,23 @@ app.post("/api/settings", requireAdmin, (req, res) => {
   }
 });
 // ── 9. Catch-All Route for React Router ───────────────────────
-// Serves WebApp/build ONLY for /login, /dashboard, etc.
-// All other requests fall through to static files (root index.html, privacy.html, etc.)
+// Serves REACT APP (ONLY for Protected Routes)
+// This intercepts ONLY /login and /dashboard requests
 const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
 
 app.use((req, res, next) => {
-  // If request is for a protected route, let React handle it
-  if (req.path.startsWith('/login') || req.path.startsWith('/dashboard')) {
+  const path = req.path;
+  
+  // ONLY serve React build for these specific paths
+  if (path === '/login' || path === '/dashboard' || path.startsWith('/login/') || path.startsWith('/dashboard/')) {
     if (fs.existsSync(reactBuildPath)) {
-      console.log(`[Router] Serving React App for: ${req.path}`);
+      console.log(`[Router] Serving React App for: ${path}`);
       express.static(reactBuildPath)(req, res, next);
     } else {
-      res.status(500).send("React Build Missing. Run 'npm run build' in WebApp.");
+      res.status(500).send("React Build Missing.");
     }
   } else {
-    // Otherwise, continue to static file serving (root) or 404
+    // For EVERYTHING else (/, /privacy, /terms, /app.js), let the Root Static Server handle it
     next();
   }
 });
