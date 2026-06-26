@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/AuthContext';
-import { theme } from '../../shared/core/theme'; // Import shared theme
+import { theme } from '../../shared/core/theme.js'; // Import shared theme
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
