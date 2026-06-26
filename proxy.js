@@ -343,21 +343,21 @@ app.post("/api/settings", requireAdmin, (req, res) => {
 const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
 
 app.use((req, res, next) => {
-  const path = req.path;
-  
-  // ONLY serve React build for these specific paths
-  if (path === '/login' || path === '/dashboard' || path.startsWith('/login/') || path.startsWith('/dashboard/')) {
+  // Only intercept specific routes for React
+  if (req.path.startsWith('/login') || req.path.startsWith('/dashboard')) {
     if (fs.existsSync(reactBuildPath)) {
-      console.log(`[Router] Serving React App for: ${path}`);
-      express.static(reactBuildPath)(req, res, next);
+      console.log(`[Router] Serving React App for: ${req.path}`);
+      // Serve the React index.html for these routes
+      res.sendFile(path.join(reactBuildPath, 'index.html'));
     } else {
-      res.status(500).send("React Build Missing.");
+      res.status(500).send("React Build Missing. Run 'npm run build' in WebApp.");
     }
   } else {
-    // For EVERYTHING else (/, /privacy, /terms, /app.js), let the Root Static Server handle it
+    // Let static file server handle everything else (/, /privacy, /assets, etc.)
     next();
   }
 });
+
 // ── 5. Start server ───────────────────────────────────────────
 app.listen(PORT, HOST, () => {
   const displayHost = (HOST === '0.0.0.0' || HOST === '::') ? 'localhost' : HOST;
