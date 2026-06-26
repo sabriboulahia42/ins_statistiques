@@ -49,7 +49,10 @@ if (rootElement) {
       React.createElement(
         BrowserRouter,
         null,
-        React.createElement(App)
+        React.createElement(
+          AuthProvider,
+          React.createElement(App)
+        )
       )
     )
   );
