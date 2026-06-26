@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/AuthContext';
-import { theme } from '../../../shared/core/theme.js'; // Import shared theme
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
@@ -17,30 +16,43 @@ export default function LoginPage() {
       : 'https://ins-statistiques.onrender.com';
   };
 
-  // Load Facebook SDK
+  // ── Load Facebook SDK ──────────────────────────────────────
   useEffect(() => {
-    const appId = process.env.REACT_APP_FACEBOOK_APP_ID; 
+    const appId = process.env.REACT_APP_FACEBOOK_APP_ID; // Ensure this is set in your .env
+    
     if (!appId) {
-      console.warn('Facebook App ID missing.');
+      console.warn('Facebook App ID missing. Social login may fail.');
       return;
     }
 
+    // Initialize FB SDK
     window.fbAsyncInit = function() {
-      window.FB.init({ appId, cookie: true, xfbml: true, version: 'v18.0' });
+      window.FB.init({
+        appId      : appId,
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v18.0'
+      });
       setFbSdkLoaded(true);
+      
+      // Check existing login status
       window.FB.getLoginStatus((response) => {
-        if (response.status === 'connected') console.log('FB Connected');
+        if (response.status === 'connected') {
+          console.log('User already logged in via Facebook');
+        }
       });
     };
 
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    // Load the SDK asynchronously
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
   }, []);
+  // ───────────────────────────────────────────────────────────
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +63,7 @@ export default function LoginPage() {
         await login(email, password);
         window.location.href = '/dashboard';
       } else {
-        setLocalError('Registration not implemented.');
+        setLocalError('Registration not implemented yet.');
       }
     } catch (err) {
       setLocalError(err.message || 'Login failed');
@@ -66,181 +78,88 @@ export default function LoginPage() {
 
   const handleFacebookLogin = () => {
     if (!window.FB || !fbSdkLoaded) {
+      console.warn('FB SDK not loaded yet, falling back to redirect...');
       handleOAuthRedirect('facebook');
       return;
     }
+
     window.FB.login((response) => {
       if (response.authResponse) {
+        // Send token to backend for verification
         window.location.href = `${getBackendUrl()}/auth/facebook/callback?access_token=${response.authResponse.accessToken}`;
       } else {
-        setLocalError('Facebook login cancelled.');
+        setLocalError('Facebook login cancelled by user.');
       }
     }, { scope: 'public_profile,email' });
   };
 
-  // --- Unified Styles using theme.js ---
-  const containerStyle = {
-    backgroundColor: theme.colors.background,
-    color: theme.colors.text,
-    fontFamily: theme.typography.fontFamily,
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing.lg,
-  };
-
-  const cardStyle = {
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.xl,
-    borderRadius: theme.borderRadius.lg,
-    border: `1px solid ${theme.colors.border}`,
-    width: '100%',
-    maxWidth: '450px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    textAlign: 'center',
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: theme.spacing.md,
-    marginBottom: theme.spacing.md,
-    borderRadius: theme.borderRadius.md,
-    border: `1px solid ${theme.colors.border}`,
-    backgroundColor: theme.colors.background,
-    color: theme.colors.text,
-    fontSize: theme.typography.size.md,
-    boxSizing: 'border-box',
-  };
-
-  const buttonPrimaryStyle = {
-    width: '100%',
-    padding: theme.spacing.md,
-    backgroundColor: theme.colors.primary,
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: theme.borderRadius.md,
-    fontSize: theme.typography.size.md,
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    marginTop: theme.spacing.md,
-  };
-
-  const socialContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing.sm,
-    marginTop: theme.spacing.lg,
-  };
-
-  const socialButtonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '10px',
-    padding: theme.spacing.sm,
-    borderRadius: theme.borderRadius.md,
-    border: `1px solid ${theme.colors.border}`,
-    backgroundColor: theme.colors.background,
-    color: theme.colors.text,
-    cursor: 'pointer',
-    fontSize: theme.typography.size.sm,
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
-        <div style={{ marginBottom: theme.spacing.lg }}>
-          <h1 style={{ color: theme.colors.primary, margin: 0, fontSize: theme.typography.size.xl }}>
-            🇹🇳 INS Statistics Portal
-          </h1>
-          <p style={{ color: theme.colors.textMuted, marginTop: theme.spacing.xs }}>Administration Access</p>
+    <div className="login-page-wrapper">
+      {/* Background Orbs */}
+      <div className="bg-orb orb-1"></div>
+      <div className="bg-orb orb-2"></div>
+      <div className="bg-orb orb-3"></div>
+
+      <div className="login-card animate-fade-in">
+        <div className="login-header">
+          <h1>🇹🇳 INS Statistics Portal</h1>
+          <p>Administration Access</p>
         </div>
 
         {(localError || authError) && (
-          <div style={{ 
-            backgroundColor: '#ffebee', 
-            color: '#c62828', 
-            padding: theme.spacing.sm, 
-            borderRadius: theme.borderRadius.sm, 
-            marginBottom: theme.spacing.md,
-            fontSize: theme.typography.size.sm
-          }}>
-            ⚠️ {localError || authError}
-          </div>
+          <div className="error-message">⚠️ {localError || authError}</div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ textAlign: 'left', marginBottom: theme.spacing.sm }}>
-            <label style={{ fontSize: theme.typography.size.sm, fontWeight: 'bold' }}>Email</label>
+          <div className="form-group">
+            <label>Email</label>
+            <input 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+              placeholder="admin@ins.tn" 
+              className="global-input"
+            />
           </div>
-          <input
-            type="email"
-            placeholder="admin@ins.tn"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={inputStyle}
-          />
-
-          <div style={{ textAlign: 'left', marginBottom: theme.spacing.sm }}>
-            <label style={{ fontSize: theme.typography.size.sm, fontWeight: 'bold' }}>Password</label>
+          <div className="form-group">
+            <label>Password</label>
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+              placeholder="••••••••" 
+              className="global-input"
+            />
           </div>
-          <input
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={inputStyle}
-          />
-
           <button 
             type="submit" 
-            style={{...buttonPrimaryStyle, opacity: isSubmitting ? 0.7 : 1}}
+            className="btn btn-primary global-btn" 
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <div style={{ 
-          margin: `${theme.spacing.lg} 0`, 
-          borderTop: `1px solid ${theme.colors.border}`, 
-          position: 'relative' 
-        }}>
-          <span style={{ 
-            position: 'absolute', 
-            top: '-10px', 
-            left: '50%', 
-            transform: 'translateX(-50%)', 
-            backgroundColor: theme.colors.surface, 
-            padding: `0 ${theme.spacing.sm}`, 
-            color: theme.colors.textMuted,
-            fontSize: theme.typography.size.xs
-          }}>
-            OR CONNECT WITH
-          </span>
-        </div>
+        <div className="divider">OR CONNECT WITH</div>
 
-        <div style={socialContainerStyle}>
-          <button type="button" style={socialButtonStyle} onClick={() => handleOAuthRedirect('google')}>
-            <span>Google</span>
+        <div className="social-login-container">
+          <button type="button" className="btn btn-social btn-google global-btn" onClick={() => handleOAuthRedirect('google')}>
+            Google
           </button>
           
-          <button type="button" style={socialButtonStyle} onClick={handleFacebookLogin}>
-            <span>Facebook</span>
+          <button type="button" className="btn btn-social btn-facebook global-btn" onClick={handleFacebookLogin}>
+            Facebook
           </button>
 
-          <button type="button" style={socialButtonStyle} onClick={() => handleOAuthRedirect('github')}>
-            <span>GitHub</span>
+          <button type="button" className="btn btn-social btn-github global-btn" onClick={() => handleOAuthRedirect('github')}>
+            GitHub
           </button>
         </div>
 
-        <div style={{ marginTop: theme.spacing.xl, paddingTop: theme.spacing.md, borderTop: `1px solid ${theme.colors.border}` }}>
-          <p style={{ fontSize: theme.typography.size.xs, color: theme.colors.textMuted }}>
-            <strong>Demo:</strong> admin@ins.tn / admin123
-          </p>
+        <div className="login-footer">
+          <p className="text-muted"><strong>Demo:</strong> admin@ins.tn / admin123</p>
         </div>
       </div>
     </div>
