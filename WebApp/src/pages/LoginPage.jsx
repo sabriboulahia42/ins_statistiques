@@ -4,7 +4,7 @@ import '../styles/LoginPage.css';
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
-  const [isLoginMode, useState(true);
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');

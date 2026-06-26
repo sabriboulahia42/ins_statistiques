@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { theme } from '../../shared/core/theme';
 import StatsCard from '../../shared/components/StatsCard';
 import DatasetList from '../../shared/components/DatasetList';
 import ExportPanel from '../../shared/components/ExportPanel';
 import { generateJSON, generateXML, generatePrintableHTML } from '../../shared/core/exporter';
+import LoginPage from './pages/LoginPage';
+import AdminDashboard from './pages/AdminDashboard';
 
-const BACKEND_URL = 'http://localhost:4000/api';
+// ── Component: Full Public Dashboard (Root /) ──────────────────────
+// This is your EXACT existing dashboard logic, now inside React.
+function PublicDashboard() {
+  const BACKEND_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3080/api' 
+    : '/api'; // Use relative path in production
 
-function App() {
   const [datasets, setDatasets] = useState([]);
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -110,6 +117,51 @@ function App() {
         </aside>
       </div>
     </div>
+  );
+}
+
+// ── Component: Protected Admin Route ─────────────────────────
+const ProtectedAdminRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  if (!token || user.role !== 'admin') {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+// ── Main App Router ──────────────────────────────────────────
+function App() {
+  return (
+    <Routes>
+      {/* Public Root Dashboard */}
+      <Route path="/" element={<PublicDashboard />} />
+      
+      {/* Legal Pages (Iframes for static HTML) */}
+      <Route path="/privacy" element={
+        <iframe src="/privacy.html" style={{width:'100%', height:'100vh', border:'none'}} title="Privacy" />
+      } />
+      <Route path="/terms" element={
+        <iframe src="/terms.html" style={{width:'100%', height:'100vh', border:'none'}} title="Terms" />
+      } />
+
+      {/* Auth */}
+      <Route path="/login" element={<LoginPage />} />
+
+      {/* Protected Admin */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedAdminRoute>
+            <AdminDashboard />
+          </ProtectedAdminRoute>
+        } 
+      />
+
+      {/* Catch-all */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
