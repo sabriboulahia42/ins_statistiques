@@ -43,11 +43,32 @@ app.use(cookieParser());
 // ── Passport initialization ──────────────────────────────────
 app.use(passport.initialize());
 
-// ── 1. Serve static files (Vite Build Output) ────────────────
-// Point directly to the Vite build folder so assets load correctly
-const buildPath = path.join(__dirname, 'WebApp', 'build');
-console.log(`[Static Server] Serving from: ${buildPath}`);
-app.use(express.static(buildPath));
+// ── 1. Serve REACT BUILD Assets & Files ──────────────────────
+const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
+
+// Serve specific assets from the React build first
+// This ensures /assets/*.css and /assets/*.js are found
+app.use('/assets', express.static(path.join(reactBuildPath, 'assets')));
+app.use('/vite.svg', express.static(path.join(reactBuildPath, 'vite.svg')));
+
+// Serve the main React index.html for specific routes
+app.get(['/login', '/dashboard'], (req, res) => {
+  if (fs.existsSync(reactBuildPath)) {
+    console.log(`[Router] Serving React App for: ${req.path}`);
+    res.sendFile(path.join(reactBuildPath, 'index.html'));
+  } else {
+    res.status(500).send("React Build Missing.");
+  }
+});
+
+// ── 2. Serve ROOT Static Files (Public Dashboard) ────────────
+// Serves root/index.html, privacy.html, terms.html, etc.
+// This handles "/", "/privacy", "/terms" instantly.
+console.log(`[Static Server] Serving ROOT public files from: ${__dirname}`);
+app.use(express.static(__dirname, {
+  // Ignore these files so React can handle them if needed
+  ignore: ['WebApp'] 
+}));
 // ── 2. Accept raw XML in POST /api/ins  ───────────────────────
 app.use("/api/ins", express.text({ type: "*/*", limit: "1mb" }));
 
@@ -335,24 +356,24 @@ app.post("/api/settings", requireAdmin, (req, res) => {
   }
 });
 // ── 9. Catch-All Route for React Router ───────────────────────
-// Serves WebApp/build ONLY for /login, /dashboard, etc.
-// All other requests fall through to static files (root index.html, privacy.html, etc.)
-const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
-
+// Serves REACT APP (ONLY for Protected Routes)
+// This intercepts ONLY /login and /dashboard requests
 app.use((req, res, next) => {
-  // If request is for a protected route, let React handle it
+  // Only intercept specific routes for React
   if (req.path.startsWith('/login') || req.path.startsWith('/dashboard')) {
     if (fs.existsSync(reactBuildPath)) {
       console.log(`[Router] Serving React App for: ${req.path}`);
-      express.static(reactBuildPath)(req, res, next);
+      // Serve the React index.html for these routes
+      res.sendFile(path.join(reactBuildPath, 'index.html'));
     } else {
       res.status(500).send("React Build Missing. Run 'npm run build' in WebApp.");
     }
   } else {
-    // Otherwise, continue to static file serving (root) or 404
+    // Let static file server handle everything else (/, /privacy, /assets, etc.)
     next();
   }
 });
+
 // ── 5. Start server ───────────────────────────────────────────
 app.listen(PORT, HOST, () => {
   const displayHost = (HOST === '0.0.0.0' || HOST === '::') ? 'localhost' : HOST;

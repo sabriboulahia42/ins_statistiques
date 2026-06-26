@@ -8,12 +8,10 @@ export default function LoginPage() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [localError, setLocalError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fbSdkLoaded, setFbSdkLoaded] = useState(false);
 
-  // Determine backend URL based on environment
   const getBackendUrl = () => {
     return window.location.hostname === 'localhost' 
       ? 'http://localhost:3080' 
@@ -23,35 +21,19 @@ export default function LoginPage() {
   // Load Facebook SDK
   useEffect(() => {
     const appId = process.env.REACT_APP_FACEBOOK_APP_ID; 
-    
     if (!appId) {
-      console.warn('Facebook App ID not found. Social login may not work.');
+      console.warn('Facebook App ID missing.');
       return;
     }
 
     window.fbAsyncInit = function() {
-      window.FB.init({
-        appId      : appId,
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v18.0'
-      });
-
+      window.FB.init({ appId, cookie: true, xfbml: true, version: 'v18.0' });
       setFbSdkLoaded(true);
-
-      // Check login status immediately after load
-      window.FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          console.log('User already logged in to Facebook and App');
-          // Optionally auto-login or show dashboard button here
-        }
-      });
     };
 
-    // Load the SDK asynchronously
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
+      if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
@@ -62,13 +44,12 @@ export default function LoginPage() {
     e.preventDefault();
     setLocalError('');
     setIsSubmitting(true);
-
     try {
       if (isLoginMode) {
         await login(email, password);
         window.location.href = '/dashboard';
       } else {
-        setLocalError('Registration not implemented yet. Use login with admin@ins.tn / admin123');
+        setLocalError('Registration not implemented yet.');
       }
     } catch (err) {
       setLocalError(err.message || 'Login failed');
@@ -77,138 +58,162 @@ export default function LoginPage() {
     }
   };
 
-  // Standard Redirect Method (Works without SDK)
   const handleOAuthRedirect = (provider) => {
     window.location.href = `${getBackendUrl()}/auth/${provider}`;
   };
 
-  // Facebook Popup Method (Uses SDK)
   const handleFacebookLogin = () => {
     if (!window.FB || !fbSdkLoaded) {
-      // Fallback to redirect if SDK isn't ready
-      console.log('FB SDK not ready, falling back to redirect');
       handleOAuthRedirect('facebook');
       return;
     }
-
     window.FB.login((response) => {
       if (response.authResponse) {
-        // User logged in successfully via Popup
-        // Now send token to backend or redirect to callback to finish session
-        // For this app architecture, we redirect to our backend callback to create the session
         window.location.href = `${getBackendUrl()}/auth/facebook/callback?access_token=${response.authResponse.accessToken}`;
       } else {
-        console.log('User cancelled login or did not fully authorize.');
         setLocalError('Facebook login cancelled.');
       }
     }, { scope: 'public_profile,email' });
   };
 
+  const handleTwitterClick = () => {
+    alert('Twitter (X) login is currently unavailable.');
+  };
+  // Unified Light Theme Presentation Styles (Tailwind v4 handles the styling)
   return (
-    <div className="login-container">
-      <div className="login-card animate-fade-in">
-        <div className="login-header">
-          <h1>🇹🇳 INS Statistics Portal</h1>
-          <p>Administration Access</p>
-        </div>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50/60 p-4 font-sans antialiased selection:bg-red-500 selection:text-white">
+      
+      {/* Top Header Branding Banner matching Main Dashboard */}
+      <div className="flex items-center gap-3 mb-8 text-center">
+        <span className="text-2xl">🇹🇳</span>
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+          المعهد الوطني للإحصاء <span className="text-slate-300 mx-1">|</span> INS Portal
+        </h1>
+        <span className="text-2xl">🇶🇦</span>
+      </div>
 
+      {/* Styled Card via Radix UI Nova architecture */}
+      <Card className="w-full max-w-md border border-slate-200/80 shadow-xl bg-white/95 backdrop-blur-md rounded-2xl overflow-hidden">
+        <CardHeader className="space-y-1.5 text-center border-b border-slate-100 pb-6 pt-6">
+          <CardTitle className="text-xl font-bold text-slate-800 tracking-tight">
+            Administration Access
+          </CardTitle>
+          <CardDescription className="text-slate-500 text-sm">
+            Sign in to access your administrative data workbench
+          </CardDescription>
+        </CardHeader>
+
+        {/* Global Error Banner */}
         {(localError || authError) && (
-          <div className="error-message">
+          <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-100 rounded-xl text-xs text-red-600 flex items-center gap-2 font-medium">
             ⚠️ {localError || authError}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="admin@ins.tn"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <CardContent className="space-y-4 pt-5">
+            {/* Email Field */}
+            <div className="space-y-2 text-left">
+              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isSubmitting}
+                placeholder="admin@ins.tn"
+                className="h-11 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:border-transparent rounded-xl transition-all placeholder:text-slate-400"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+            {/* Password Field */}
+            <div className="space-y-2 text-left">
+              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={isSubmitting}
+                placeholder="••••••••"
+                className="h-11 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:border-transparent rounded-xl transition-all placeholder:text-slate-400"
+              />
+            </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-primary"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Signing in...' : 'Sign In'}
-          </button>
+            {/* Sandbox Credentials Note */}
+            <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 text-center text-xs text-slate-500">
+              <span className="font-bold text-slate-700">Demo Account:</span> admin@ins.tn <span className="text-slate-300 mx-0.5">/</span> admin123
+            </div>
+          </CardContent>
+
+          <CardFooter className="flex flex-col gap-4 border-t border-slate-100 pt-5 pb-6">
+            <Button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="w-full h-11 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl shadow-sm transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+            >
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
+            </Button>
+
+            {/* OAuth Divider Line */}
+            <div className="relative w-full flex items-center justify-center my-1">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200"></div>
+              </div>
+              <span className="relative bg-white px-3 text-[10px] uppercase text-slate-400 tracking-widest font-semibold">
+                Or Connect With
+              </span>
+            </div>
+
+            {/* OAuth Federated Button Grid */}
+            <div className="grid grid-cols-2 gap-2.5 w-full">
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={() => handleOAuthRedirect('google')}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                Google
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={() => handleOAuthRedirect('github')}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                GitHub
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={handleFacebookLogin}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                Facebook
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={true}
+                title="Currently unavailable"
+                onClick={handleTwitterClick}
+                className="h-10 rounded-xl border-slate-100 text-slate-400 bg-slate-50/50 cursor-not-allowed font-normal text-sm opacity-60"
+              >
+                X (Twitter)
+              </Button>
+            </div>
+          </CardFooter>
         </form>
-
-        <div className="divider">OR CONNECT WITH</div>
-
-        <div className="social-login-container">
-          <button 
-            type="button"
-            className="btn btn-social btn-google"
-            onClick={() => handleOAuthRedirect('google')}
-          >
-            <svg className="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114-3.51 0-6.355-2.846-6.355-6.355s2.846-6.355 6.355-6.355c1.621 0 3.093.613 4.225 1.623l3.123-3.123C19.168 2.38 15.938 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c5.894 0 10.963-4.225 10.963-11.24 0-.768-.068-1.513-.197-2.225H12.24z"/>
-            </svg>
-            Google
-          </button>
-          
-          {/* Facebook Button with Popup Logic */}
-          <button 
-            type="button"
-            className="btn btn-social btn-facebook"
-            onClick={handleFacebookLogin}
-          >
-            <svg className="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/>
-            </svg>
-            Facebook
-          </button>
-
-          <button 
-            type="button"
-            className="btn btn-social btn-x"
-            onClick={() => handleOAuthRedirect('twitter')}
-          >
-            <svg className="social-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            X
-          </button>
-
-          <button 
-            type="button"
-            className="btn btn-social btn-github"
-            onClick={() => handleOAuthRedirect('github')}
-          >
-            <svg className="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-            </svg>
-            GitHub
-          </button>
-        </div>
-
-        <div className="login-footer">
-          <p className="text-muted">
-            <strong>Demo Credentials:</strong><br />
-            Email: admin@ins.tn<br />
-            Password: admin123
-          </p>
-        </div>
-      </div>
+      </Card>
     </div>
   );
 }

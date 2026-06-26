@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import '../../index.css';
+import { AuthProvider } from './auth/AuthContext.jsx';
+
+// ✅ FIX: Import the ROOT index.css (one level up) for unified global styles
+import '../../index.css'; 
+// ✅ Optional: Import theme if you want to use JS variables in React components
+import { theme } from '../../shared/core/theme.js'; 
 
 // ── SECURITY GATE: Check Auth BEFORE rendering React ──────────
 const getToken = () => localStorage.getItem('token');
@@ -36,18 +41,25 @@ if (!isPublicPath) {
 }
 // ───────────────────────────────────────────────────────────────
 
-// Use React.createElement to avoid JSX in .ts files
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
+  
+  // CORRECT SYNTAX: Pass a single React Element tree
   root.render(
-    React.StrictMode,
-    null,
     React.createElement(
-      BrowserRouter,
+      React.StrictMode,
       null,
-      React.createElement(App)
+      React.createElement(
+        BrowserRouter,
+        null,
+        React.createElement(
+          AuthProvider,
+          null,
+          React.createElement(App)
+        )
+      )
     )
   );
 } else {
