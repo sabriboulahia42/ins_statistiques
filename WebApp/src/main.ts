@@ -52,6 +52,7 @@ if (rootElement) {
         null,
         React.createElement(
           AuthProvider,
+          null,
           React.createElement(App)
         )
       )
