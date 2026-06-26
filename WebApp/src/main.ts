@@ -36,18 +36,21 @@ if (!isPublicPath) {
 }
 // ───────────────────────────────────────────────────────────────
 
-// Use React.createElement to avoid JSX in .ts files
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
+  
+  // CORRECT SYNTAX: Pass a single React Element tree
   root.render(
-    React.StrictMode,
-    null,
     React.createElement(
-      BrowserRouter,
+      React.StrictMode,
       null,
-      React.createElement(App)
+      React.createElement(
+        BrowserRouter,
+        null,
+        React.createElement(App)
+      )
     )
   );
 } else {
