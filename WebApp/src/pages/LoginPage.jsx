@@ -77,204 +77,142 @@ export default function LoginPage() {
   const handleTwitterClick = () => {
     alert('Twitter (X) login is currently unavailable.');
   };
-
-  // Original Dark Theme Styles
-  const styles = {
-    wrapper: {
-      backgroundColor: '#0f172a',
-      color: '#f8fafc',
-      fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '24px',
-    },
-    card: {
-      backgroundColor: '#1e293b',
-      padding: '32px',
-      borderRadius: '12px',
-      border: '1px solid #334155',
-      width: '100%',
-      maxWidth: '450px',
-      boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 6px',
-      textAlign: 'center',
-    },
-    header: { marginBottom: '24px' },
-    title: { color: '#0056b3', margin: '0px', fontSize: '28px' },
-    subtitle: { color: '#94a3b8', marginTop: '4px' },
-    formGroup: { textAlign: 'left', marginBottom: '8px' },
-    label: { fontSize: '14px', fontWeight: 'bold' },
-    input: {
-      width: '100%',
-      padding: '16px',
-      marginBottom: '16px',
-      borderRadius: '8px',
-      border: '1px solid #334155',
-      backgroundColor: '#0f172a',
-      color: '#f8fafc',
-      fontSize: '16px',
-      boxSizing: 'border-box',
-    },
-    button: {
-      width: '100%',
-      padding: '16px',
-      backgroundColor: '#0056b3',
-      color: '#ffffff',
-      border: 'none',
-      borderRadius: '8px',
-      fontSize: '16px',
-      fontWeight: 'bold',
-      cursor: 'pointer',
-      marginTop: '16px',
-      opacity: 1,
-    },
-    divider: {
-      borderTop: '1px solid #334155',
-      position: 'relative',
-      marginTop: '24px',
-      marginBottom: '24px',
-    },
-    dividerText: {
-      position: 'absolute',
-      top: '-10px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      backgroundColor: '#1e293b',
-      color: '#94a3b8',
-      fontSize: '12px',
-      padding: '0 8px',
-    },
-    socialContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px',
-    },
-    socialButton: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '10px',
-      padding: '8px',
-      borderRadius: '8px',
-      border: '1px solid #334155',
-      backgroundColor: '#0f172a',
-      color: '#f8fafc',
-      cursor: 'pointer',
-      fontSize: '14px',
-    },
-    footer: {
-      marginTop: '32px',
-      paddingTop: '16px',
-      borderTop: '1px solid #334155',
-    },
-    muted: { fontSize: '12px', color: '#94a3b8' },
-    error: {
-      backgroundColor: 'rgba(239, 68, 68, 0.1)',
-      color: '#ef4444',
-      padding: '12px',
-      borderRadius: '8px',
-      marginBottom: '16px',
-      textAlign: 'left',
-      fontSize: '14px',
-    },
-    icon: { width: '16px', height: '16px' }
-  };
-
+  // Unified Light Theme Presentation Styles (Tailwind v4 handles the styling)
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.card}>
-        <div style={styles.header}>
-          <h1 style={styles.title}>🇹🇳 INS Statistics Portal</h1>
-          <p style={styles.subtitle}>Administration Access</p>
-        </div>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50/60 p-4 font-sans antialiased selection:bg-red-500 selection:text-white">
+      
+      {/* Top Header Branding Banner matching Main Dashboard */}
+      <div className="flex items-center gap-3 mb-8 text-center">
+        <span className="text-2xl">🇹🇳</span>
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+          المعهد الوطني للإحصاء <span className="text-slate-300 mx-1">|</span> INS Portal
+        </h1>
+        <span className="text-2xl">🇶🇦</span>
+      </div>
 
+      {/* Styled Card via Radix UI Nova architecture */}
+      <Card className="w-full max-w-md border border-slate-200/80 shadow-xl bg-white/95 backdrop-blur-md rounded-2xl overflow-hidden">
+        <CardHeader className="space-y-1.5 text-center border-b border-slate-100 pb-6 pt-6">
+          <CardTitle className="text-xl font-bold text-slate-800 tracking-tight">
+            Administration Access
+          </CardTitle>
+          <CardDescription className="text-slate-500 text-sm">
+            Sign in to access your administrative data workbench
+          </CardDescription>
+        </CardHeader>
+
+        {/* Global Error Banner */}
         {(localError || authError) && (
-          <div style={styles.error}>⚠️ {localError || authError}</div>
+          <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-100 rounded-xl text-xs text-red-600 flex items-center gap-2 font-medium">
+            ⚠️ {localError || authError}
+          </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Email</label>
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
-              placeholder="admin@ins.tn" 
-              style={styles.input}
+          <CardContent className="space-y-4 pt-5">
+            {/* Email Field */}
+            <div className="space-y-2 text-left">
+              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isSubmitting}
+                placeholder="admin@ins.tn"
+                className="h-11 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:border-transparent rounded-xl transition-all placeholder:text-slate-400"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2 text-left">
+              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+                Password
+              </label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={isSubmitting}
+                placeholder="••••••••"
+                className="h-11 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:border-transparent rounded-xl transition-all placeholder:text-slate-400"
+              />
+            </div>
+
+            {/* Sandbox Credentials Note */}
+            <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 text-center text-xs text-slate-500">
+              <span className="font-bold text-slate-700">Demo Account:</span> admin@ins.tn <span className="text-slate-300 mx-0.5">/</span> admin123
+            </div>
+          </CardContent>
+
+          <CardFooter className="flex flex-col gap-4 border-t border-slate-100 pt-5 pb-6">
+            <Button 
+              type="submit" 
               disabled={isSubmitting}
-            />
-          </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Password</label>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-              placeholder="••••••••" 
-              style={styles.input}
-              disabled={isSubmitting}
-            />
-          </div>
-          <button 
-            type="submit" 
-            style={{...styles.button, opacity: isSubmitting ? 0.6 : 1}}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Signing in...' : 'Sign In'}
-          </button>
+              className="w-full h-11 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl shadow-sm transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+            >
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
+            </Button>
+
+            {/* OAuth Divider Line */}
+            <div className="relative w-full flex items-center justify-center my-1">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200"></div>
+              </div>
+              <span className="relative bg-white px-3 text-[10px] uppercase text-slate-400 tracking-widest font-semibold">
+                Or Connect With
+              </span>
+            </div>
+
+            {/* OAuth Federated Button Grid */}
+            <div className="grid grid-cols-2 gap-2.5 w-full">
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={() => handleOAuthRedirect('google')}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                Google
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={() => handleOAuthRedirect('github')}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                GitHub
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isSubmitting}
+                onClick={handleFacebookLogin}
+                className="h-10 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 font-normal text-sm cursor-pointer"
+              >
+                Facebook
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={true}
+                title="Currently unavailable"
+                onClick={handleTwitterClick}
+                className="h-10 rounded-xl border-slate-100 text-slate-400 bg-slate-50/50 cursor-not-allowed font-normal text-sm opacity-60"
+              >
+                X (Twitter)
+              </Button>
+            </div>
+          </CardFooter>
         </form>
-
-        <div style={styles.divider}>
-          <span style={styles.dividerText}>OR CONNECT WITH</span>
-        </div>
-
-        <div style={styles.socialContainer}>
-          <button 
-            type="button" 
-            style={styles.socialButton} 
-            onClick={() => handleOAuthRedirect('google')}
-            disabled={isSubmitting}
-          >
-            Google
-          </button>
-          
-          <button 
-            type="button" 
-            style={styles.socialButton} 
-            onClick={handleFacebookLogin}
-            disabled={isSubmitting}
-          >
-            Facebook
-          </button>
-
-          <button 
-            type="button" 
-            style={{...styles.socialButton, opacity: 0.6, cursor: 'not-allowed'}} 
-            title="Currently unavailable"
-            onClick={handleTwitterClick}
-            disabled={true}
-          >
-            <svg style={styles.icon} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            X
-          </button>
-
-          <button 
-            type="button" 
-            style={styles.socialButton} 
-            onClick={() => handleOAuthRedirect('github')}
-            disabled={isSubmitting}
-          >
-            GitHub
-          </button>
-        </div>
-
-        <div style={styles.footer}>
-          <p style={styles.muted}><strong>Demo:</strong> admin@ins.tn / admin123</p>
-        </div>
-      </div>
+      </Card>
     </div>
   );
 }
+  }
