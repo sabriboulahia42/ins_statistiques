@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { AuthProvider } from './auth/AuthContext.jsx'; 
 import '../../index.css';
 
 // ── SECURITY GATE: Check Auth BEFORE rendering React ──────────
