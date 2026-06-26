@@ -43,13 +43,31 @@ app.use(cookieParser());
 // ── Passport initialization ──────────────────────────────────
 app.use(passport.initialize());
 
-// ── 1. Serve ROOT Static Files (Your Original Dashboard) ──────
-// This MUST come first. It serves root/index.html, app.js, css, etc.
+// ── 1. Serve REACT BUILD Assets & Files ──────────────────────
+const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
+
+// Serve specific assets from the React build first
+// This ensures /assets/*.css and /assets/*.js are found
+app.use('/assets', express.static(path.join(reactBuildPath, 'assets')));
+app.use('/vite.svg', express.static(path.join(reactBuildPath, 'vite.svg')));
+
+// Serve the main React index.html for specific routes
+app.get(['/login', '/dashboard'], (req, res) => {
+  if (fs.existsSync(reactBuildPath)) {
+    console.log(`[Router] Serving React App for: ${req.path}`);
+    res.sendFile(path.join(reactBuildPath, 'index.html'));
+  } else {
+    res.status(500).send("React Build Missing.");
+  }
+});
+
+// ── 2. Serve ROOT Static Files (Public Dashboard) ────────────
+// Serves root/index.html, privacy.html, terms.html, etc.
 // This handles "/", "/privacy", "/terms" instantly.
 console.log(`[Static Server] Serving ROOT public files from: ${__dirname}`);
 app.use(express.static(__dirname, {
-  // Ignore the WebApp folder so React can handle it separately
-  ignore: ['WebApp', 'WebApp/build'] 
+  // Ignore these files so React can handle them if needed
+  ignore: ['WebApp'] 
 }));
 // ── 2. Accept raw XML in POST /api/ins  ───────────────────────
 app.use("/api/ins", express.text({ type: "*/*", limit: "1mb" }));
