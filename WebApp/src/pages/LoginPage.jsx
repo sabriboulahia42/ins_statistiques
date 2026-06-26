@@ -131,7 +131,7 @@ export default function LoginPage() {
             <div className="space-y-2 text-left">
               <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-slate-600">
                 Password
-              </label>
+              </Label>
               <Input
                 id="password"
                 type="password"
