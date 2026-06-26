@@ -2,8 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import { AuthProvider } from './auth/AuthContext.jsx'; 
-import '../../index.css';
+import { AuthProvider } from './auth/AuthContext.jsx';
+
+// ✅ FIX: Import the ROOT index.css (one level up) for unified global styles
+import '../../index.css'; 
+// ✅ Optional: Import theme if you want to use JS variables in React components
+import '../../shared/core/theme.js'; 
 
 // ── SECURITY GATE: Check Auth BEFORE rendering React ──────────
 const getToken = () => localStorage.getItem('token');
