@@ -16,34 +16,20 @@ export default function LoginPage() {
       : 'https://ins-statistiques.onrender.com';
   };
 
-  // ── Load Facebook SDK ──────────────────────────────────────
+  // Load Facebook SDK
   useEffect(() => {
     const appId = process.env.REACT_APP_FACEBOOK_APP_ID; 
-    
     if (!appId) {
-      console.warn('Facebook App ID missing. Add REACT_APP_FACEBOOK_APP_ID to .env');
+      console.warn('Facebook App ID missing.');
       return;
     }
 
-    // Initialize FB SDK
     window.fbAsyncInit = function() {
-      window.FB.init({
-        appId      : appId,
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v18.0'
-      });
+      window.FB.init({ appId, cookie: true, xfbml: true, version: 'v18.0' });
       setFbSdkLoaded(true);
-      
-      // Check existing login status
-      window.FB.getLoginStatus((response) => {
-        if (response.status === 'connected') {
-          console.log('User already logged in with FB');
-        }
-      });
     };
 
-    // Load the SDK asynchronously
+    // Load SDK asynchronously
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
@@ -52,7 +38,6 @@ export default function LoginPage() {
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }, []);
-  // ───────────────────────────────────────────────────────────
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,15 +63,12 @@ export default function LoginPage() {
 
   const handleFacebookLogin = () => {
     if (!window.FB || !fbSdkLoaded) {
-      // Fallback to backend redirect if SDK isn't loaded
-      console.warn('FB SDK not loaded, falling back to redirect');
+      // Fallback to redirect if SDK not ready
       handleOAuthRedirect('facebook');
       return;
     }
-
     window.FB.login((response) => {
       if (response.authResponse) {
-        // Send token to backend for verification
         window.location.href = `${getBackendUrl()}/auth/facebook/callback?access_token=${response.authResponse.accessToken}`;
       } else {
         setLocalError('Facebook login cancelled.');
@@ -117,25 +99,29 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input 
+              id="email"
               type="email" 
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               required 
               placeholder="admin@ins.tn" 
               className="global-input"
+              disabled={isSubmitting}
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input 
+              id="password"
               type="password" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               required 
               placeholder="••••••••" 
               className="global-input"
+              disabled={isSubmitting}
             />
           </div>
           <button 
@@ -154,6 +140,7 @@ export default function LoginPage() {
             type="button" 
             className="btn btn-social btn-google global-btn" 
             onClick={() => handleOAuthRedirect('google')}
+            disabled={isSubmitting}
           >
             Google
           </button>
@@ -162,6 +149,7 @@ export default function LoginPage() {
             type="button" 
             className="btn btn-social btn-facebook global-btn" 
             onClick={handleFacebookLogin}
+            disabled={isSubmitting}
           >
             Facebook
           </button>
@@ -172,10 +160,9 @@ export default function LoginPage() {
             title="Currently unavailable"
             style={{ opacity: 0.6, cursor: 'not-allowed' }}
             onClick={handleTwitterClick}
+            disabled={true}
           >
-            <svg className="social-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
+            <svg className="social-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             X
           </button>
 
@@ -183,6 +170,7 @@ export default function LoginPage() {
             type="button" 
             className="btn btn-social btn-github global-btn" 
             onClick={() => handleOAuthRedirect('github')}
+            disabled={isSubmitting}
           >
             GitHub
           </button>
