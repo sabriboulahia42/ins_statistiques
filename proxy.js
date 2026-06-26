@@ -358,8 +358,6 @@ app.post("/api/settings", requireAdmin, (req, res) => {
 // ── 9. Catch-All Route for React Router ───────────────────────
 // Serves REACT APP (ONLY for Protected Routes)
 // This intercepts ONLY /login and /dashboard requests
-const reactBuildPath = path.join(__dirname, 'WebApp', 'build');
-
 app.use((req, res, next) => {
   // Only intercept specific routes for React
   if (req.path.startsWith('/login') || req.path.startsWith('/dashboard')) {
