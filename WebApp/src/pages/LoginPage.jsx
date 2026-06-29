@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/AuthContext';
-
-// ✅ IMPORTANT: Include .tsx and .ts extensions explicitly
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
+import { Github, Chrome, Facebook } from "lucide-react";
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
@@ -75,34 +74,26 @@ export default function LoginPage() {
     }, { scope: 'public_profile,email' });
   };
 
-  const handleTwitterClick = () => {
-    alert('Twitter (X) login is currently unavailable.');
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background relative overflow-hidden p-4">
-      {/* Background Orbs */}
-      <div className="absolute inset-0 bg-orb orb-1"></div>
-      <div className="absolute inset-0 bg-orb orb-2"></div>
-      <div className="absolute inset-0 bg-orb orb-3"></div>
-
-      <Card className="w-full max-w-md z-10 shadow-xl animate-in fade-in zoom-in duration-500">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
-            🇹🇳 INS Statistics Portal
-          </CardTitle>
-          <CardDescription>Administration Access</CardDescription>
+    <div className="flex h-screen w-full items-center justify-center px-4 bg-background">
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
         </CardHeader>
-        
-        <CardContent className="space-y-4">
-          {(localError || authError) && (
-            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
-              ⚠️ {localError || authError}
-            </div>
-          )}
+        <CardContent>
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            
+            {/* Error Display */}
+            {(localError || authError) && (
+              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
+                ⚠️ {localError || authError}
+              </div>
+            )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -115,8 +106,11 @@ export default function LoginPage() {
               />
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                {/* Optional: Add Forgot Password link here later */}
+              </div>
               <Input
                 id="password"
                 type="password"
@@ -129,45 +123,40 @@ export default function LoginPage() {
             </div>
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Signing in...' : 'Sign In'}
-            </Button>
-          </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or connect with</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2">
-            <Button variant="outline" onClick={() => handleOAuthRedirect('google')} disabled={isSubmitting}>
-              Google
+              {isSubmitting ? 'Signing in...' : 'Login'}
             </Button>
             
-            <Button variant="outline" onClick={handleFacebookLogin} disabled={isSubmitting}>
-              Facebook
-            </Button>
+            {/* Divider */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
+              </div>
+            </div>
 
-            <Button 
-              variant="outline" 
-              onClick={handleTwitterClick} 
-              disabled={true}
-              className="opacity-60 cursor-not-allowed"
-              title="Currently unavailable"
-            >
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              X
-            </Button>
+            {/* Social Buttons */}
+            <div className="grid grid-cols-2 gap-4">
+              <Button variant="outline" onClick={() => handleOAuthRedirect('google')} disabled={isSubmitting}>
+                <Chrome className="mr-2 h-4 w-4" />
+                Google
+              </Button>
+              
+              <Button variant="outline" onClick={handleFacebookLogin} disabled={isSubmitting}>
+                <Facebook className="mr-2 h-4 w-4" />
+                Facebook
+              </Button>
+            </div>
 
-            <Button variant="outline" onClick={() => handleOAuthRedirect('github')} disabled={isSubmitting}>
-              GitHub
+            <Button variant="outline" className="w-full opacity-60 cursor-not-allowed" disabled>
+              <Github className="mr-2 h-4 w-4" />
+              GitHub (Coming Soon)
             </Button>
-          </div>
+          </form>
         </CardContent>
-        
         <CardFooter className="flex justify-center border-t pt-4">
           <p className="text-xs text-muted-foreground">
             <strong>Demo:</strong> admin@ins.tn / admin123
