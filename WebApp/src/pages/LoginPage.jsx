@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { Github, Chrome, Facebook } from "lucide-react";
+import { Github, Google, Facebook } from "lucide-react";
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
@@ -141,7 +141,7 @@ export default function LoginPage() {
             {/* Social Buttons */}
             <div className="grid grid-cols-2 gap-4">
               <Button variant="outline" onClick={() => handleOAuthRedirect('google')} disabled={isSubmitting}>
-                <Chrome className="mr-2 h-4 w-4" />
+                <Google className="mr-2 h-4 w-4" />
                 Google
               </Button>
               
