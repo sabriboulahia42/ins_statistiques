@@ -4,7 +4,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { Github, Google, Facebook } from "lucide-react";
+// Import SocialIcon directly for tree-shaking
+import { SocialIcon } from 'react-social-icons/component';
+import 'react-social-icons/google';
+import 'react-social-icons/facebook';
+import 'react-social-icons/github';
+import 'react-social-icons/twitter';
 
 export default function LoginPage() {
   const { login, error: authError } = useAuth();
@@ -14,32 +19,19 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fbSdkLoaded, setFbSdkLoaded] = useState(false);
 
-  const getBackendUrl = () => {
-    return window.location.hostname === 'localhost' 
-      ? 'http://localhost:3080' 
-      : 'https://ins-statistiques.onrender.com';
-  };
+  // Get Config from Global Window object (Injected by main.tsx)
+  const getBackendUrl = () => window.APP_CONFIG?.backendUrl || 'https://ins-statistiques.onrender.com';
 
-  // Load Facebook SDK
+  // Listen for FB SDK Ready Event (Injected by main.tsx)
   useEffect(() => {
-    const appId = process.env.REACT_APP_FACEBOOK_APP_ID; 
-    if (!appId) {
-      console.warn('Facebook App ID missing.');
-      return;
+    const handleFbReady = () => setFbSdkLoaded(true);
+    
+    if (window.FB && window.FB._sdkLoaded) {
+      setFbSdkLoaded(true);
     }
 
-    window.fbAsyncInit = function() {
-      window.FB.init({ appId, cookie: true, xfbml: true, version: 'v18.0' });
-      setFbSdkLoaded(true);
-    };
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    window.addEventListener('facebook-sdk-ready', handleFbReady);
+    return () => window.removeEventListener('facebook-sdk-ready', handleFbReady);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -74,26 +66,34 @@ export default function LoginPage() {
     }, { scope: 'public_profile,email' });
   };
 
-  return (
-    <div className="flex h-screen w-full items-center justify-center px-4 bg-background">
-      <Card className="mx-auto max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-4">
-            
-            {/* Error Display */}
-            {(localError || authError) && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
-                ⚠️ {localError || authError}
-              </div>
-            )}
+  const handleTwitterClick = () => {
+    alert('Twitter (X) login is currently unavailable.');
+  };
 
-            <div className="grid gap-2">
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-background relative overflow-hidden p-4">
+      {/* Background Orbs */}
+      <div className="absolute inset-0 bg-orb orb-1"></div>
+      <div className="absolute inset-0 bg-orb orb-2"></div>
+      <div className="absolute inset-0 bg-orb orb-3"></div>
+
+      <Card className="w-full max-w-md z-10 shadow-xl animate-in fade-in zoom-in duration-500">
+        <CardHeader className="space-y-1 text-center">
+          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
+            🇹🇳 INS Statistics Portal
+          </CardTitle>
+          <CardDescription>Administration Access</CardDescription>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          {(localError || authError) && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
+              ⚠️ {localError || authError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -106,11 +106,8 @@ export default function LoginPage() {
               />
             </div>
             
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                {/* Optional: Add Forgot Password link here later */}
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -123,40 +120,64 @@ export default function LoginPage() {
             </div>
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Signing in...' : 'Login'}
-            </Button>
-            
-            {/* Divider */}
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
-            {/* Social Buttons */}
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" onClick={() => handleOAuthRedirect('google')} disabled={isSubmitting}>
-                <Google className="mr-2 h-4 w-4" />
-                Google
-              </Button>
-              
-              <Button variant="outline" onClick={handleFacebookLogin} disabled={isSubmitting}>
-                <Facebook className="mr-2 h-4 w-4" />
-                Facebook
-              </Button>
-            </div>
-
-            <Button variant="outline" className="w-full opacity-60 cursor-not-allowed" disabled>
-              <Github className="mr-2 h-4 w-4" />
-              GitHub (Coming Soon)
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or connect with</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3">
+            {/* --- OFFICIAL GOOGLE BUTTON --- */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  const token = credentialResponse.credential;
+                  window.location.href = `${getBackendUrl()}/auth/google/callback?token=${token}`;
+                }}
+                onError={() => {
+                  setLocalError('Google Login Failed');
+                }}
+                useOneTap={false}
+                theme="outline"
+                size="large"
+                text="signin_with"
+                shape="rectangular"
+                width={320}
+              />
+            </div>
+            
+            {/* Facebook Button */}
+            <Button variant="outline" onClick={handleFacebookLogin} disabled={isSubmitting} className="h-12">
+              <SocialIcon network="facebook" style={{ marginRight: '8px', height: 20, width: 20 }} />
+              Continue with Facebook
+            </Button>
+
+            {/* Twitter Button */}
+            <Button 
+              variant="outline" 
+              onClick={handleTwitterClick} 
+              disabled={true}
+              className="opacity-60 cursor-not-allowed h-12"
+            >
+              <SocialIcon network="twitter" style={{ marginRight: '8px', height: 20, width: 20 }} />
+              X (Unavailable)
+            </Button>
+
+            {/* GitHub Button */}
+            <Button variant="outline" onClick={() => handleOAuthRedirect('github')} disabled={isSubmitting} className="h-12">
+              <SocialIcon network="github" style={{ marginRight: '8px', height: 20, width: 20 }} />
+              Continue with GitHub
+            </Button>
+          </div>
         </CardContent>
+        
         <CardFooter className="flex justify-center border-t pt-4">
           <p className="text-xs text-muted-foreground">
             <strong>Demo:</strong> admin@ins.tn / admin123
