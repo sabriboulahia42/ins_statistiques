@@ -1,6 +1,6 @@
 # 🚀 FREE Deployment Guide - INS Statistics Portal
 
-## ✅ Social Authentication Ready!
+## ✅ Social Authentication Ready
 
 Your application has **Facebook, X (Twitter), GitHub, and Google** authentication fully integrated and ready to deploy!
 
@@ -13,6 +13,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Perfect for:** Quick deployment, zero cost, no credit card required
 
 **Free Tier Limits:**
+
 - 512MB RAM
 - Web services sleep after 15 minutes of inactivity
 - Wakes up automatically on next request (~30 seconds)
@@ -28,6 +29,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
    - Select your repository
 
 3. **Configure Settings**:
+
    ```
    Name: ins-statistics-portal
    Region: Choose closest to your users
@@ -41,6 +43,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
    ```
 
 4. **Add Environment Variables** (click "Advanced" tab):
+
    ```env
    NODE_ENV=production
    PORT=3080
@@ -66,6 +69,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Your live URL:** `https://your-app-name.onrender.com`
 
 **Pro Tips:**
+
 - Use a service like [UptimeRobot](https://uptimerobot.com/) to ping your app every 14 minutes to prevent sleep
 - First load after sleep takes ~30 seconds, subsequent loads are instant
 - Render provides automatic HTTPS/SSL
@@ -77,6 +81,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Perfect for:** Apps that need to stay awake 24/7
 
 **Free Tier Limits:**
+
 - 512MB RAM
 - 0.1 CPU
 - 2GB storage
@@ -93,6 +98,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
    - Choose your repository and branch
 
 3. **Configure**:
+
    ```
    Service name: ins-portal
    Branch: main
@@ -111,6 +117,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Your live URL:** `https://your-app-name.koyeb.app`
 
 **Why Koyeb is Great:**
+
 - No sleep on free tier
 - Global edge network
 - Automatic SSL/HTTPS
@@ -123,6 +130,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Perfect for:** Low-latency global apps
 
 **Free Tier Limits:**
+
 - 3 shared-cpu-1x VMs (256MB RAM each)
 - 3GB persistent volume storage
 - 160GB outbound data transfer/month
@@ -131,23 +139,27 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Steps to Deploy:**
 
 1. **Install Fly CLI**:
+
    ```bash
    curl -L https://fly.io/install.sh | sh
    ```
 
 2. **Sign Up & Login**:
+
    ```bash
    fly auth signup
    fly auth login
    ```
 
 3. **Initialize Your App**:
+
    ```bash
    cd /workspace
    fly launch --no-deploy
    ```
-   
+
 4. **Set Environment Variables**:
+
    ```bash
    fly secrets set NODE_ENV=production
    fly secrets set JWT_SECRET=$(openssl rand -base64 32)
@@ -164,6 +176,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
    ```
 
 5. **Deploy**:
+
    ```bash
    fly deploy
    ```
@@ -177,6 +190,7 @@ Your application has **Facebook, X (Twitter), GitHub, and Google** authenticatio
 **Perfect for:** Production apps needing serious resources
 
 **Free Tier Limits:**
+
 - **4 ARM CPUs**
 - **24GB RAM** (Yes, really!)
 - 200GB block storage
@@ -201,28 +215,32 @@ This is the most generous free tier available anywhere!
 
 Before deploying, you MUST get API credentials from each provider:
 
-#### Google OAuth2:
+#### Google OAuth2
+
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create project → Enable Google+ API
 3. Credentials → Create OAuth 2.0 Client ID
 4. Authorized redirect URI: `https://yourdomain.com/auth/google/callback`
 5. Copy Client ID and Secret
 
-#### Facebook OAuth2:
+#### Facebook OAuth2
+
 1. Go to [Facebook Developers](https://developers.facebook.com/)
 2. Create app → Add "Facebook Login" product
 3. Settings → Basic: Copy App ID and App Secret
 4. Facebook Login → Settings: Add redirect URI
    `https://yourdomain.com/auth/facebook/callback`
 
-#### X (Twitter) OAuth2:
+#### X (Twitter) OAuth2
+
 1. Go to [Twitter Developer Portal](https://developer.twitter.com/)
 2. Create project and app
 3. Enable "Sign in with Twitter"
 4. Callback URL: `https://yourdomain.com/auth/twitter/callback`
 5. Copy API Key and API Key Secret
 
-#### GitHub OAuth2:
+#### GitHub OAuth2
+
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. New OAuth App
 3. Homepage URL: `https://yourdomain.com`
@@ -252,6 +270,7 @@ Visit `http://localhost:3080` and test all login buttons!
 ## 🔒 Security Best Practices
 
 1. **Never commit `.env` to Git** - Add to `.gitignore`:
+
    ```
    .env
    *.pem
@@ -284,6 +303,7 @@ Visit `http://localhost:3080` and test all login buttons!
    - All resources load over HTTPS
 
 4. **Test API endpoints**:
+
    ```bash
    curl https://your-app-name.onrender.com/health
    ```
@@ -293,7 +313,7 @@ Visit `http://localhost:3080` and test all login buttons!
 ## 📊 Comparison Table
 
 | Platform | RAM | CPU | Sleep? | Credit Card? | Best For |
-|----------|-----|-----|--------|--------------|----------|
+| ---------- | ----- | ----- | -------- | -------------- | ---------- |
 | **Render** | 512MB | Shared | Yes (15min) | ❌ No | Quick projects |
 | **Koyeb** | 512MB | 0.1 | ❌ No | ❌ No | 24/7 apps |
 | **Fly.io** | 256MB | Shared | ❌ No | ✅ Yes | Global apps |
@@ -304,20 +324,24 @@ Visit `http://localhost:3080` and test all login buttons!
 ## 🆘 Troubleshooting
 
 ### "App won't start"
+
 - Check logs in platform dashboard
 - Verify all environment variables are set
 - Ensure `npm start` works locally
 
 ### "OAuth callback error"
+
 - Verify callback URLs match exactly (including `https://`)
 - Check OAuth app is configured for production domain
 - Ensure environment variables are correct
 
 ### "CORS errors"
+
 - Update `CORS_ORIGIN` to your production URL
 - Restart app after changing env vars
 
 ### "App sleeps too often" (Render)
+
 - Use [UptimeRobot](https://uptimerobot.com/) free tier
 - Set monitor to ping your app every 14 minutes
 - Or upgrade to Render paid plan ($7/month)
@@ -327,11 +351,13 @@ Visit `http://localhost:3080` and test all login buttons!
 ## 🎯 Recommended Path
 
 **For testing/demo:**
+
 1. Deploy to **Render** (fastest, no credit card)
 2. Get OAuth credentials from providers
 3. Test all features
 
 **For production:**
+
 1. Deploy to **Oracle Cloud** (most powerful free tier)
 2. Or use **Koyeb** for simplicity
 3. Set up custom domain

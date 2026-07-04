@@ -20,13 +20,16 @@
 
 ## Step 3: Add to Your Environment
 
-### For Local Development:
+### For Local Development
+
 Create/edit `.env` file in your project root:
+
 ```bash
 HF_API_KEY=hf_your_actual_token_here
 ```
 
-### For Render Deployment:
+### For Render Deployment
+
 1. Go to your Render dashboard
 2. Select your web service
 3. Click **"Environment"** tab
@@ -39,7 +42,8 @@ HF_API_KEY=hf_your_actual_token_here
 
 Once deployed, test the chat assistant on your website!
 
-### Notes on Free Tier:
+### Notes on Free Tier
+
 - ✅ **Completely free** - no credit card needed
 - ⏳ Model may need ~30s to "warm up" on first request
 - 🔄 If you get "loading" error, just wait and retry

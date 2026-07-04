@@ -4,10 +4,10 @@
 
 Your application already has **Facebook, X (Twitter), and GitHub** authentication fully integrated!
 
-### What's Already Working:
+### What's Already Working
 
 | Provider | Backend Strategy | Frontend Button | Routes | Status |
-|----------|-----------------|-----------------|--------|--------|
+| ---------- | ----------------- | ----------------- | -------- | -------- |
 | **Google** | ✅ Configured | ✅ Available | ✅ `/auth/google` | Ready |
 | **Facebook** | ✅ Configured | ✅ Available | ✅ `/auth/facebook` | Ready |
 | **X (Twitter)** | ✅ Configured | ✅ Available | ✅ `/auth/twitter` | Ready |
@@ -73,9 +73,11 @@ FRONTEND_URL=https://yourdomain.com
 4. Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client ID"
 5. Application type: **Web application**
 6. Authorized redirect URIs:
+
    ```
    https://yourdomain.com/auth/google/callback
    ```
+
 7. Copy **Client ID** and **Client Secret** to your `.env`
 
 ### 2. Facebook OAuth2 Setup
@@ -87,9 +89,11 @@ FRONTEND_URL=https://yourdomain.com
 5. Copy **App ID** and **App Secret** to your `.env`
 6. In "Facebook Login" → Settings:
    - Valid OAuth Redirect URIs:
+
      ```
      https://yourdomain.com/auth/facebook/callback
      ```
+
 7. Set App Domain: `yourdomain.com`
 
 ### 3. X (Twitter) OAuth2 Setup
@@ -99,10 +103,13 @@ FRONTEND_URL=https://yourdomain.com
 3. In App settings → Keys and tokens:
    - Enable "Sign in with Twitter"
    - Set Callback URL:
+
      ```
      https://yourdomain.com/auth/twitter/callback
      ```
+
 4. Copy **API Key (Consumer Key)** and **API Key Secret** to `.env`:
+
    ```env
    X_CLIENT_ID=your-api-key
    X_CLIENT_SECRET=your-api-key-secret
@@ -116,9 +123,11 @@ FRONTEND_URL=https://yourdomain.com
    - Application name: INS Statistics Portal
    - Homepage URL: `https://yourdomain.com`
    - Authorization callback URL:
+
      ```
      https://yourdomain.com/auth/github/callback
      ```
+
 4. Copy **Client ID** and generate **Client Secret** to `.env`
 
 ---
@@ -131,7 +140,7 @@ FRONTEND_URL=https://yourdomain.com
 
 **Limits:** 512MB RAM, web services sleep after 15min inactivity (wakes up on request)
 
-#### Steps:
+#### Steps
 
 1. **Go to [Render.com](https://render.com/)** and sign up (free)
 
@@ -141,6 +150,7 @@ FRONTEND_URL=https://yourdomain.com
    - Or deploy directly from Git URL
 
 3. **Configure:**
+
    ```
    Name: ins-statistics-portal
    Region: Choose closest to you
@@ -153,6 +163,7 @@ FRONTEND_URL=https://yourdomain.com
    ```
 
 4. **Add Environment Variables** (click "Advanced" → "Add Environment Variable"):
+
    ```
    JWT_SECRET=generate-random-string-here
    NODE_ENV=production
@@ -182,7 +193,7 @@ FRONTEND_URL=https://yourdomain.com
 
 **Limits:** 512MB RAM, 0.1 CPU, 2GB storage, 100GB bandwidth/month
 
-#### Steps:
+#### Steps
 
 1. **Go to [Koyeb.com](https://www.koyeb.com/)** and sign up (free)
 
@@ -192,6 +203,7 @@ FRONTEND_URL=https://yourdomain.com
    - Choose your repository
 
 3. **Configure:**
+
    ```
    Service name: ins-portal
    Branch: main
@@ -216,20 +228,23 @@ FRONTEND_URL=https://yourdomain.com
 
 **Limits:** Requires credit card, but $0 cost if staying within free limits
 
-#### Steps:
+#### Steps
 
 1. **Install Fly CLI:**
+
    ```bash
    curl -L https://fly.io/install.sh | sh
    ```
 
 2. **Sign up and login:**
+
    ```bash
    fly auth signup
    fly auth login
    ```
 
 3. **Initialize and deploy:**
+
    ```bash
    # Create fly.toml configuration
    fly launch --no-deploy
@@ -261,7 +276,7 @@ FRONTEND_URL=https://yourdomain.com
 
 **Limits:** Requires credit card for verification, but truly free
 
-#### Quick Setup:
+#### Quick Setup
 
 1. **Sign up at** [Oracle Cloud Free Tier](https://www.oracle.com/cloud/free/)
 
@@ -279,7 +294,7 @@ FRONTEND_URL=https://yourdomain.com
 Several providers offer free VPS tiers:
 
 | Provider | Free Tier | Requirements |
-|----------|-----------|--------------|
+| ---------- | ----------- | -------------- |
 | **Google Cloud** | e2-micro (0.25 vCPU, 1GB RAM) | Credit card |
 | **AWS** | t2.micro (1 vCPU, 1GB RAM, 12 months) | Credit card |
 | **Azure** | B1S (1 vCPU, 1GB RAM, 12 months) | Credit card |
@@ -354,7 +369,7 @@ sudo certbot --nginx -d yourdomain.com
 
 ### Option 7: Deploy to AWS (Free Tier - 12 Months)
 
-#### Using Elastic Beanstalk:
+#### Using Elastic Beanstalk
 
 ```bash
 # Install EB CLI
@@ -370,7 +385,7 @@ eb create ins-portal-production
 eb deploy
 ```
 
-#### Using EC2:
+#### Using EC2
 
 Follow the VPS deployment steps above on an EC2 instance.
 
@@ -421,7 +436,7 @@ pm2 status
 
 ## 🧪 Testing Before Deployment
 
-### Local Testing:
+### Local Testing
 
 ```bash
 # Install dependencies
@@ -442,7 +457,7 @@ curl -X POST http://localhost:3080/auth/login \
   -d '{"email":"admin@ins.tn","password":"admin123"}'
 ```
 
-### Production Testing Checklist:
+### Production Testing Checklist
 
 - [ ] All OAuth providers working
 - [ ] HTTPS enabled
@@ -458,7 +473,7 @@ curl -X POST http://localhost:3080/auth/login \
 
 ## 📊 Post-Deployment Monitoring
 
-### Logs:
+### Logs
 
 ```bash
 # PM2 logs
@@ -469,7 +484,7 @@ tail -f /var/log/nginx/access.log
 tail -f /var/log/nginx/error.log
 ```
 
-### Health Check Endpoint:
+### Health Check Endpoint
 
 Add to `proxy.js`:
 
@@ -483,9 +498,10 @@ app.get('/health', (req, res) => {
 });
 ```
 
-### Uptime Monitoring:
+### Uptime Monitoring
 
 Use services like:
+
 - [UptimeRobot](https://uptimerobot.com/) (free)
 - [Pingdom](https://www.pingdom.com/)
 - [StatusCake](https://www.statuscake.com/)
@@ -494,7 +510,7 @@ Use services like:
 
 ## 🔄 Continuous Deployment
 
-### GitHub Actions Example:
+### GitHub Actions Example
 
 Create `.github/workflows/deploy.yml`:
 
@@ -534,23 +550,27 @@ jobs:
 
 ## 📞 Troubleshooting
 
-### Common Issues:
+### Common Issues
 
 **OAuth Callback Errors:**
+
 - Verify callback URLs match exactly (including `https://`)
 - Check environment variables are set correctly
 - Ensure OAuth apps are configured for production domain
 
 **CORS Errors:**
+
 - Update `CORS_ORIGIN` in `.env` to include your domain
 - Restart server after changing environment variables
 
 **Authentication Not Working:**
+
 - Check JWT_SECRET is set and consistent
 - Verify database permissions (if using file-based storage)
 - Check browser console for errors
 
 **Server Won't Start:**
+
 - Check port 3080 is not in use
 - Verify all dependencies installed: `npm install`
 - Check Node.js version: `node --version` (should be >= 16)

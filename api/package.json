@@ -1,0 +1,29 @@
+{
+  "name": "ins-statistiques-api",
+  "version": "1.0.0",
+  "description": "Isolated backend API for INS Statistics portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "fast-xml-parser": "^5.9.3",
+    "jsonwebtoken": "^9.0.3",
+    "node-fetch": "^2.7.0",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-oauth": "^1.0.0",
+    "passport-twitter": "^0.1.5",
+    "uuid": "^14.0.1"
+  }
+}
