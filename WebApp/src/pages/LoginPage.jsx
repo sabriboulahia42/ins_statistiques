@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 // Import SocialIcon directly for tree-shaking
 import { SocialIcon } from 'react-social-icons/component';
+import { GoogleLogin } from '@react-oauth/google';
 import 'react-social-icons/google';
 import 'react-social-icons/facebook';
 import 'react-social-icons/github';
