@@ -7,8 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // 1. Retrieve Env Vars
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const FACEBOOK_APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://ins-statistiques.onrender.com';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://ins-statistiques-api.onrender.com';
 // 2. Validate Critical Vars
 if (!GOOGLE_CLIENT_ID) console.error("❌ Missing VITE_GOOGLE_CLIENT_ID");
 if (!FACEBOOK_APP_ID) console.error("❌ Missing VITE_FACEBOOK_APP_ID");

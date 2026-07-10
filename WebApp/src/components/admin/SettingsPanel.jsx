@@ -3,6 +3,7 @@ import { useAuth } from '../../auth/AuthContext';
 import '../../styles/AdminPanels.css';
 
 export default function SettingsPanel() {
+  const API_BASE_URL = window.APP_CONFIG?.backendUrl || import.meta.env.VITE_API_URL || 'https://ins-statistiques-api.onrender.com';
   const { token } = useAuth();
   const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(true);
@@ -15,9 +16,18 @@ export default function SettingsPanel() {
   }, [token]);
 
   const loadSettings = async () => {
+    if (!token) {
+      setSettings({});
+      setLoading(false);
+      setError('');
+      return;
+    }
+
     try {
       setLoading(true);
-      const res = await fetch('/api/settings');
+      const res = await fetch(`${API_BASE_URL}/api/settings`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       
       if (!res.ok) throw new Error('Failed to load settings');
       
@@ -38,7 +48,7 @@ export default function SettingsPanel() {
     setSuccess('');
 
     try {
-      const res = await fetch('/api/settings', {
+      const res = await fetch(`${API_BASE_URL}/api/settings`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

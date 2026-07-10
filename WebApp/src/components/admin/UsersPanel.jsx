@@ -3,6 +3,7 @@ import { useAuth } from '../../auth/AuthContext';
 import '../../styles/AdminPanels.css';
 
 export default function UsersPanel() {
+  const API_BASE_URL = window.APP_CONFIG?.backendUrl || import.meta.env.VITE_API_URL || 'https://ins-statistiques-api.onrender.com';
   const { token } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,9 +16,16 @@ export default function UsersPanel() {
   }, [token]);
 
   const loadUsers = async () => {
+    if (!token) {
+      setUsers([]);
+      setLoading(false);
+      setError('');
+      return;
+    }
+
     try {
       setLoading(true);
-      const res = await fetch('/auth/users', {
+      const res = await fetch(`${API_BASE_URL}/auth/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -37,7 +45,7 @@ export default function UsersPanel() {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
 
     try {
-      const res = await fetch(`/auth/users/${userId}`, {
+      const res = await fetch(`${API_BASE_URL}/auth/users/${userId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -53,7 +61,7 @@ export default function UsersPanel() {
 
   const handleUpdateUser = async (userId, updates) => {
     try {
-      const res = await fetch(`/auth/users/${userId}`, {
+      const res = await fetch(`${API_BASE_URL}/auth/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -65,7 +73,7 @@ export default function UsersPanel() {
       if (!res.ok) throw new Error('Failed to update user');
       
       const updatedUser = await res.json();
-      setUsers(users.map(u => u.id === userId ? updatedUser.user : u));
+      setUsers(users.map(u => u.id === userId ? updatedUser.data : u));
       setEditingUser(null);
       setSelectedUser(null);
     } catch (err) {

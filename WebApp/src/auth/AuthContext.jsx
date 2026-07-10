@@ -7,6 +7,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const API_BASE_URL = window.APP_CONFIG?.backendUrl || import.meta.env.VITE_API_URL || 'https://ins-statistiques-api.onrender.com';
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,8 +35,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   const verifyToken = async (t) => {
+    if (!t) {
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await fetch('/auth/me', {
+      const res = await fetch(`${API_BASE_URL}/auth/me`, {
         headers: { 'Authorization': `Bearer ${t}` }
       });
       
@@ -44,7 +50,13 @@ export function AuthProvider({ children }) {
       }
 
       const data = await res.json();
-      setUser(data.user);
+      const verifiedUser = data.user || null;
+
+      // Keep auth state and persisted storage aligned so downstream panels stay in sync.
+      setUser(verifiedUser);
+      setToken(t);
+      localStorage.setItem('authToken', t);
+      localStorage.setItem('authUser', JSON.stringify(verifiedUser));
       setError(null);
     } catch (err) {
       // Token expired or invalid
@@ -59,7 +71,7 @@ export function AuthProvider({ children }) {
     setError(null);
     
     try {
-      const res = await fetch('/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -91,7 +103,7 @@ export function AuthProvider({ children }) {
     setError(null);
     
     try {
-      const res = await fetch('/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, name })

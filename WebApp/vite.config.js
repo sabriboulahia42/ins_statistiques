@@ -10,8 +10,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      'react-native': 'react-native-web', // Keep your existing alias
-      '@': path.resolve(__dirname, './src'), // Add the @ alias here
+      'react-native': path.resolve(__dirname, 'node_modules/react-native-web'),
+      'react-native-web': path.resolve(__dirname, 'node_modules/react-native-web'),
+      '@': path.resolve(__dirname, './src'),
+      react: path.resolve(__dirname, 'node_modules/react'),
+      'react/jsx-runtime': path.resolve(__dirname, 'node_modules/react/jsx-runtime'),
     },
   },
   server: {
@@ -19,5 +22,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
-  }
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react/jsx-runtime'],
+  },
 });
