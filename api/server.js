@@ -92,6 +92,11 @@ const ROLES = {
 };
 
 // ══════════════════════════════════════════════════════════════════
+// DATABASE CONNECTION (MONGOOSE)
+// ══════════════════════════════════════════════════════════════════
+require('../db/mongoose');
+
+// ══════════════════════════════════════════════════════════════════
 // IN-MEMORY USER DATABASE
 // ══════════════════════════════════════════════════════════════════
 
@@ -408,6 +413,16 @@ app.use('/api/ins', express.text({ type: '*/*', limit: '1mb' }));
 // ══════════════════════════════════════════════════════════════════
 // HEALTH CHECK
 // ══════════════════════════════════════════════════════════════════
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'INS Statistics Backend API',
+    environment: NODE_ENV,
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  });
+});
 
 app.get('/api/health', (req, res) => {
   res.json({
@@ -773,6 +788,11 @@ app.post('/api/settings', requireAdmin, (req, res) => {
     res.status(500).json({ error: 'Failed to save settings' });
   }
 });
+
+// ══════════════════════════════════════════════════════════════════
+// PROFILE CRUD ROUTES
+// ══════════════════════════════════════════════════════════════════
+app.use('/', require('../routes/profile'));
 
 // ══════════════════════════════════════════════════════════════════
 // ERROR HANDLING
