@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './style.css'
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -55,9 +56,11 @@ if (FACEBOOK_APP_ID) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <AuthProvider>
-        <App />
+      <BrowserRouter>
+        <AuthProvider>
+          <App />
         </AuthProvider>
+      </BrowserRouter>
     </GoogleOAuthProvider>
   </React.StrictMode>,
 )
