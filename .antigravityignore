@@ -1,0 +1,11 @@
+# Block binary and deep platform-native directories
+MobileApp/windows/
+MobileApp/macos/
+node_modules/
+
+# Block massive analytical mock datasets from being indexed continuously
+data/*.json
+
+# Ignore compiled build caches
+dist/
+build/

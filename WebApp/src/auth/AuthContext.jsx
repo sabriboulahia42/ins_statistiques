@@ -66,15 +66,22 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (emailOrPayload, password) => {
     setLoading(true);
     setError(null);
+    
+    let payload;
+    if (emailOrPayload && typeof emailOrPayload === 'object') {
+      payload = emailOrPayload;
+    } else {
+      payload = { email: emailOrPayload, password };
+    }
     
     try {
       const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify(payload)
       });
 
       const data = await res.json();

@@ -122,8 +122,8 @@ function PublicDashboard() {
 
 // ── Component: Protected Admin Route ─────────────────────────
 const ProtectedAdminRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const token = localStorage.getItem('authToken');
+  const user = JSON.parse(localStorage.getItem('authUser') || '{}');
 
   if (!token || user.role !== 'admin') {
     return <Navigate to="/login" replace />;

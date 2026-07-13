@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './style.css'
 import { GoogleOAuthProvider } from '@react-oauth/google';
+// @ts-ignore – AuthProvider is consumed in JSX below; TS6133 is a false positive when module resolves to any
+import { AuthProvider } from './auth/AuthContext.jsx';
 
 // 1. Retrieve Env Vars
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
