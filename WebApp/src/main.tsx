@@ -55,7 +55,9 @@ if (FACEBOOK_APP_ID) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <App />
+      <AuthProvider>
+        <App />
+        </AuthProvider>
     </GoogleOAuthProvider>
   </React.StrictMode>,
 )
